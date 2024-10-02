@@ -1,0 +1,28 @@
+services:
+  server:
+    container_name: "snippet-manager"
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: "snippet-operations-db"
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "${DATABASE_PORT}:5432"
+    env_file:
+      - .env
+    volumes:
+      - snippet_manager_data:/var/lib/postgresql/data
+
+volumes:
+  snippet_manager_data:
