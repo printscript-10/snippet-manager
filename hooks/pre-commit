@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo '-----------------🚀Launching pre-commit hook-----------------'
+
+./gradlew ktlintFormat
+if [ $? -ne 0 ]; then
+  echo '❌ ktlintFormat failed. Please fix the issues before committing.'
+  exit 1
+fi
+
+git add -u
+
+./gradlew build --daemon
+
+if [ $? -ne 0 ]; then
+  echo '❌ Build failed. Please fix the issues before committing.'
+  exit 1
+fi
+
+echo '✅ Build passed! Your code style is on point.'
+
+echo '-----------------🚀Finished pre-commit hook-----------------'
+
+exit 0
