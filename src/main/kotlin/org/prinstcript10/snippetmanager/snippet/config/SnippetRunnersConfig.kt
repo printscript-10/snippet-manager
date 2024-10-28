@@ -8,14 +8,13 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class SnippetRunnersConfig(
-    private val printscriptRunnerService: PrintscriptRunnerService
+    private val printscriptRunnerService: PrintscriptRunnerService,
 ) {
 
     @Bean
     fun SnippetRunnerMap(): Map<SnippetLanguage, RunnerService> {
         return mapOf(
-            SnippetLanguage.PRINTSCRIPT to printscriptRunnerService
+            SnippetLanguage.PRINTSCRIPT to printscriptRunnerService,
         )
     }
-
 }

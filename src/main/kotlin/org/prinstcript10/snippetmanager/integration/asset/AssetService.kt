@@ -17,23 +17,22 @@ class AssetService
         private val bucketUrl: String,
     ) {
 
-    fun saveSnippet(
-        snippetId: String,
-        snippet: String
-    ): ResponseEntity<String> {
-        try {
-            val request = HttpEntity(snippet, HttpHeaders())
-            rest.put("$bucketUrl/$snippetId", request)
-            return ResponseEntity.ok(null)
-        } catch (e: Exception) {
-            return ResponseEntity.badRequest().build()
+        fun saveSnippet(
+            snippetId: String,
+            snippet: String,
+        ): ResponseEntity<String> {
+            try {
+                val request = HttpEntity(snippet, HttpHeaders())
+                rest.put("$bucketUrl/$snippetId", request)
+                return ResponseEntity.ok(null)
+            } catch (e: Exception) {
+                return ResponseEntity.badRequest().build()
+            }
+        }
+
+        fun getSnippet(
+            snippetId: String,
+        ): String {
+            return rest.getForEntity("$bucketUrl/$snippetId", String::class.java).body!!
         }
     }
-
-    fun getSnippet(
-        snippetId: String
-    ): String {
-        return rest.getForEntity("$bucketUrl/$snippetId", String::class.java).body!!
-    }
-
-}

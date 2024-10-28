@@ -18,24 +18,21 @@ class PrintscriptRunnerService
         private val runnerUrl: String,
     ) : RunnerService {
 
+        override fun validateSnippet(
+            snippet: String,
+            token: String,
+        ): ResponseEntity<Any> {
+            try {
+                val request = HttpEntity(ValidateSnippetDTO(snippet), getHeaders(token))
+                return rest.exchange("$runnerUrl/validate", HttpMethod.PUT, request, Any::class.java)
+            } catch (e: Exception) {
+                return ResponseEntity.badRequest().body(e.message)
+            }
+        }
 
-    override fun validateSnippet(
-        snippet: String,
-        token: String
-    ): ResponseEntity<Any> {
-        try {
-            val request = HttpEntity(ValidateSnippetDTO(snippet), getHeaders(token))
-            return rest.exchange("$runnerUrl/validate", HttpMethod.PUT, request, Any::class.java)
-        } catch (e: Exception) {
-            return ResponseEntity.badRequest().body(e.message)
+        private fun getHeaders(token: String): HttpHeaders {
+            return HttpHeaders().apply {
+                set("Authorization", "Bearer $token")
+            }
         }
     }
-
-    private fun getHeaders(token: String): HttpHeaders {
-        return HttpHeaders().apply {
-            set("Authorization", "Bearer $token")
-        }
-    }
-
-
-}

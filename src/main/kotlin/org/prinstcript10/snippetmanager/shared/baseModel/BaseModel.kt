@@ -20,5 +20,5 @@ abstract class BaseModel(
     val createdAt: LocalDateTime? = null,
 
     @UpdateTimestamp
-    val updatedAt: LocalDateTime? = null
+    val updatedAt: LocalDateTime? = null,
 )

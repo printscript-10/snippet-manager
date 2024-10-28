@@ -11,5 +11,5 @@ annotation class EnumFormat(
     val enumClass: KClass<out Enum<*>>,
     val message: String = "Invalid value",
     val groups: Array<KClass<*>> = [],
-    val payload: Array<KClass<out Payload>> = []
+    val payload: Array<KClass<out Payload>> = [],
 )

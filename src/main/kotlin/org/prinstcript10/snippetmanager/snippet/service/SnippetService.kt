@@ -19,54 +19,53 @@ class SnippetService
     constructor(
         private val assetService: AssetService,
         private val snippetRepository: SnippetRepository,
-        private val runnerServices: Map<SnippetLanguage, RunnerService>
+        private val runnerServices: Map<SnippetLanguage, RunnerService>,
     ) {
 
-    fun createSnippet(
-        createSnippetDTO: CreateSnippetDTO,
-        userId: String,
-        token: String
-    ) {
-
-        // VALIDATE SNIPPET
-        val runnerResponse = runnerServices[createSnippetDTO.language]!!.validateSnippet(createSnippetDTO.snippet)
-
-        if (runnerResponse.statusCode.isError) {
-            println(extractMessage(runnerResponse.body!!.toString(), "message"))
-            throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
-        }
-
-        // CREATE SNIPPET
-        val snippet = snippetRepository.save(
-            Snippet(
-                name = createSnippetDTO.name,
-                language = createSnippetDTO.language,
+        fun createSnippet(
+            createSnippetDTO: CreateSnippetDTO,
+            userId: String,
+            token: String,
+        ) {
+            // VALIDATE SNIPPET
+            val runnerResponse = runnerServices[createSnippetDTO.language]!!.validateSnippet(
+                createSnippetDTO.snippet,
+                token,
             )
-        )
 
-        // SAVE SNIPPET TO ASSET SERVICE
-        val assetResponse = assetService.saveSnippet(snippet.id!!, createSnippetDTO.snippet)
+            if (runnerResponse.statusCode.isError) {
+                println(extractMessage(runnerResponse.body!!.toString(), "message"))
+                throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
+            }
 
-        if (assetResponse.statusCode.isError) {
-            snippetRepository.delete(snippet)
-            throw ConflictException("Error saving snippet to asset service")
+            // CREATE SNIPPET
+            val snippet = snippetRepository.save(
+                Snippet(
+                    name = createSnippetDTO.name,
+                    language = createSnippetDTO.language,
+                ),
+            )
+
+            // SAVE SNIPPET TO ASSET SERVICE
+            val assetResponse = assetService.saveSnippet(snippet.id!!, createSnippetDTO.snippet)
+
+            if (assetResponse.statusCode.isError) {
+                snippetRepository.delete(snippet)
+                throw ConflictException("Error saving snippet to asset service")
+            }
+
+            // CREATE PERMISSION
+
+            // SHIIIIIIIIII
         }
 
-        // CREATE PERMISSION
+        fun getSnippet(snippetId: String): String {
+            return assetService.getSnippet(snippetId)
+        }
 
-
-        // SHIIIIIIIIII
-
+        private fun extractMessage(jsonString: String, field: String): String {
+            val parsedJsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.length - 1)
+            val jsonObject: JsonObject = JsonParser.parseString(parsedJsonString).asJsonObject
+            return jsonObject.get(field).asString
+        }
     }
-
-    fun getSnippet(snippetId: String): String {
-        return assetService.getSnippet(snippetId)
-    }
-
-    private fun extractMessage(jsonString: String, field: String): String {
-        val parsedJsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.length - 1)
-        val jsonObject: JsonObject = JsonParser.parseString(parsedJsonString).asJsonObject
-        return jsonObject.get(field).asString
-    }
-
-}

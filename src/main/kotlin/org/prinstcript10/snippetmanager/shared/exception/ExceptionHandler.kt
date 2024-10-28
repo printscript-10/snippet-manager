@@ -17,7 +17,7 @@ class ExceptionHandler {
                 "timestamp" to System.currentTimeMillis(),
                 "status" to ex.status.value(),
                 "error" to ex.status.reasonPhrase,
-                "message" to ex.message
+                "message" to ex.message,
             )
         return ResponseEntity(errorDetails, ex.status)
     }
@@ -37,9 +37,8 @@ class ExceptionHandler {
                 "status" to HttpStatus.BAD_REQUEST.value(),
                 "error" to HttpStatus.BAD_REQUEST.reasonPhrase,
                 "message" to "Validation failed",
-                "errors" to errors
+                "errors" to errors,
             )
         return ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST)
     }
-
 }

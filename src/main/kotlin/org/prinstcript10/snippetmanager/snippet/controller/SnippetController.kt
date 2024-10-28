@@ -19,22 +19,21 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class SnippetController(
     @Autowired
-    private val snippetService: SnippetService
+    private val snippetService: SnippetService,
 ) {
 
     @PostMapping
     fun createSnippet(
         @Valid @RequestBody createSnippetDTO: CreateSnippetDTO,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ) {
         return snippetService.createSnippet(createSnippetDTO, jwt.subject, jwt.tokenValue)
     }
 
     @GetMapping("{snippetId}")
     fun getSnippet(
-        @PathVariable("snippetId") snippetId: String
+        @PathVariable("snippetId") snippetId: String,
     ): String {
         return snippetService.getSnippet(snippetId)
     }
-
 }

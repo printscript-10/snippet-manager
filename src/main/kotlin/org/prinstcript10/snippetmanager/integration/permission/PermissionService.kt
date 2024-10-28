@@ -13,18 +13,14 @@ class PermissionService
         private val rest: RestTemplate,
         @Value("\${permisiones_url}")
         private val runnerUrl: String,
-){
-
-    fun createPermission(
-
     ) {
 
-    }
+        fun createPermission() {
+        }
 
-    private fun getHeaders(token: String): HttpHeaders {
-        return HttpHeaders().apply {
-            set("Authorization", "Bearer $token")
+        private fun getHeaders(token: String): HttpHeaders {
+            return HttpHeaders().apply {
+                set("Authorization", "Bearer $token")
+            }
         }
     }
-
-}
