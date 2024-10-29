@@ -8,7 +8,7 @@ import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 
 @Entity
 data class Snippet(
-    val name: String,
+    var name: String,
 
     @Enumerated(EnumType.STRING)
     val language: SnippetLanguage,

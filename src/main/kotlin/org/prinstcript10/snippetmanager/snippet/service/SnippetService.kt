@@ -3,10 +3,14 @@ package org.prinstcript10.snippetmanager.snippet.service
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.prinstcript10.snippetmanager.integration.asset.AssetService
+import org.prinstcript10.snippetmanager.integration.permission.PermissionService
+import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
+import org.prinstcript10.snippetmanager.shared.exception.NotFoundException
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
@@ -20,6 +24,7 @@ class SnippetService
         private val assetService: AssetService,
         private val snippetRepository: SnippetRepository,
         private val runnerServices: Map<SnippetLanguage, RunnerService>,
+        private val permissionService: PermissionService,
     ) {
 
         fun createSnippet(
@@ -34,7 +39,6 @@ class SnippetService
             )
 
             if (runnerResponse.statusCode.isError) {
-                println(extractMessage(runnerResponse.body!!.toString(), "message"))
                 throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
             }
 
@@ -55,17 +59,63 @@ class SnippetService
             }
 
             // CREATE PERMISSION
-
-            // SHIIIIIIIIII
+            permissionService.createPermission(snippet.id, SnippetOwnership.OWNER, token)
         }
 
-        fun getSnippet(snippetId: String): String {
+        fun getSnippet(snippetId: String, token: String): String {
+            val permission = permissionService.getPermission(snippetId, token)
+            if (permission.statusCode.isError) {
+                throw BadRequestException("User does not have permission to access this resource")
+            }
             return assetService.getSnippet(snippetId)
         }
 
+        fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, userId: String, token: String) {
+            var existingSnippet = snippetRepository.findById(snippetId)
+                .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
+
+            val permission = permissionService.getPermission(snippetId, token)
+
+            val ownership = extractMessage(permission.body!!.toString(), "ownership")
+
+            if (ownership != SnippetOwnership.OWNER.toString()) {
+                throw BadRequestException(
+                    "User is not the snippet owner",
+                )
+            }
+
+            val runnerResponse = runnerServices[existingSnippet.language]!!.validateSnippet(
+                editSnippetDTO.snippet,
+                token,
+            )
+
+            if (runnerResponse.statusCode.isError) {
+                throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
+            }
+
+            existingSnippet.name = editSnippetDTO.name
+
+            assetService.saveSnippet(snippetId, editSnippetDTO.snippet)
+
+            snippetRepository.save(existingSnippet)
+        }
+
         private fun extractMessage(jsonString: String, field: String): String {
-            val parsedJsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.length - 1)
+            val startIndex = jsonString.indexOf("{")
+            val endIndex = jsonString.indexOf("}", startIndex)
+
+            if (startIndex == -1 || endIndex == -1 || endIndex < startIndex) {
+                throw ConflictException("Invalid JSON string")
+            }
+
+            val parsedJsonString = jsonString.substring(startIndex, endIndex + 1)
+
             val jsonObject: JsonObject = JsonParser.parseString(parsedJsonString).asJsonObject
-            return jsonObject.get(field).asString
+
+            val field = jsonObject.get(field)?.asString
+
+            if (field == null) throw ConflictException("Invalid field")
+
+            return field
         }
     }

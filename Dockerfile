@@ -5,7 +5,7 @@ WORKDIR /home/gradle/src
 RUN gradle assemble
 FROM eclipse-temurin:21-jre
 
-EXPOSE 8080
+EXPOSE 8081
 
 RUN mkdir /app
 
