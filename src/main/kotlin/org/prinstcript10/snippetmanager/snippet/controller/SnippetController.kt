@@ -3,11 +3,13 @@ package org.prinstcript10.snippetmanager.snippet.controller
 import jakarta.validation.Valid
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -29,7 +31,7 @@ class SnippetController(
         @Valid @RequestBody createSnippetDTO: CreateSnippetDTO,
         @AuthenticationPrincipal jwt: Jwt,
     ) {
-        return snippetService.createSnippet(createSnippetDTO, jwt.subject, jwt.tokenValue)
+        return snippetService.createSnippet(createSnippetDTO, jwt.tokenValue)
     }
 
     @GetMapping("{snippetId}")
@@ -46,6 +48,22 @@ class SnippetController(
         @Valid @RequestBody editSnippetDTO: EditSnippetDTO,
         @AuthenticationPrincipal jwt: Jwt,
     ) {
-        return snippetService.updateSnippet(editSnippetDTO, snippetId, jwt.subject, jwt.tokenValue)
+        return snippetService.updateSnippet(editSnippetDTO, snippetId, jwt.tokenValue)
+    }
+
+    @DeleteMapping("{snippetId}")
+    fun deleteSnippet(
+        @PathVariable("snippetId") snippetId: String,
+        @AuthenticationPrincipal jwt: Jwt,
+    ) {
+        return snippetService.deleteSnippet(snippetId, jwt.tokenValue)
+    }
+
+    @PostMapping("share")
+    fun shareSnippet(
+        @Valid @RequestBody shareSnippetDTO: ShareSnippetDTO,
+        @AuthenticationPrincipal jwt: Jwt,
+    ) {
+        return snippetService.shareSnippet(shareSnippetDTO, jwt.tokenValue)
     }
 }

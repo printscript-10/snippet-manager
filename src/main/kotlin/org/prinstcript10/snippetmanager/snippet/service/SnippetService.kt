@@ -11,6 +11,7 @@ import org.prinstcript10.snippetmanager.shared.exception.ConflictException
 import org.prinstcript10.snippetmanager.shared.exception.NotFoundException
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
@@ -29,7 +30,6 @@ class SnippetService
 
         fun createSnippet(
             createSnippetDTO: CreateSnippetDTO,
-            userId: String,
             token: String,
         ) {
             // VALIDATE SNIPPET
@@ -59,22 +59,35 @@ class SnippetService
             }
 
             // CREATE PERMISSION
-            permissionService.createPermission(snippet.id, SnippetOwnership.OWNER, token)
+            val permission = permissionService.createPermission(snippet.id, token)
+
+            if (permission.statusCode.isError) {
+                snippetRepository.delete(snippet)
+                throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
+            }
         }
 
         fun getSnippet(snippetId: String, token: String): String {
-            val permission = permissionService.getPermission(snippetId, token)
-            if (permission.statusCode.isError) {
-                throw BadRequestException("User does not have permission to access this resource")
-            }
-            return assetService.getSnippet(snippetId)
-        }
-
-        fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, userId: String, token: String) {
-            var existingSnippet = snippetRepository.findById(snippetId)
+            val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
             val permission = permissionService.getPermission(snippetId, token)
+            if (permission.statusCode.isError) {
+                throw BadRequestException(extractMessage(permission.body!!.toString(), "message"))
+            }
+
+            return assetService.getSnippet(snippetId)
+        }
+
+        fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {
+            val existingSnippet = snippetRepository.findById(snippetId)
+                .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
+
+            val permission = permissionService.getPermission(snippetId, token)
+
+            if (permission.statusCode.isError) {
+                throw BadRequestException(extractMessage(permission.body!!.toString(), "message"))
+            }
 
             val ownership = extractMessage(permission.body!!.toString(), "ownership")
 
@@ -98,6 +111,36 @@ class SnippetService
             assetService.saveSnippet(snippetId, editSnippetDTO.snippet)
 
             snippetRepository.save(existingSnippet)
+        }
+
+        fun deleteSnippet(snippetId: String, token: String) {
+            val existingSnippet = snippetRepository.findById(snippetId)
+                .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
+
+            val permission = permissionService.deleteSnippetPermissions(snippetId, token)
+
+            if (permission.statusCode.isError) {
+                throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
+            }
+
+            val assetResponse = assetService.deleteSnippet(snippetId)
+
+            if (assetResponse.statusCode.isError) {
+                throw ConflictException("Error deleting snippet from asset service")
+            }
+
+            snippetRepository.delete(existingSnippet)
+        }
+
+        fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String) {
+            val existingSnippet = snippetRepository.findById(shareSnippetDTO.snippetId)
+                .orElseThrow { NotFoundException("Snippet with ID ${shareSnippetDTO.snippetId} not found") }
+
+            val permission = permissionService.shareSnippet(shareSnippetDTO, token)
+
+            if (permission.statusCode.isError) {
+                throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
+            }
         }
 
         private fun extractMessage(jsonString: String, field: String): String {

@@ -1,6 +1,6 @@
 package org.prinstcript10.snippetmanager.integration.permission
 
-import org.prinstcript10.snippetmanager.integration.permission.dto.CreateSnippetPermissionDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.postForEntity
 
 @Component
 class PermissionService
@@ -19,23 +20,37 @@ class PermissionService
         private val permissionUrl: String,
     ) {
 
-        fun createPermission(snippetId: String, ownership: SnippetOwnership, token: String): ResponseEntity<String> {
+        fun createPermission(snippetId: String, token: String): ResponseEntity<Any> {
             try {
-                val createSnippetPermissionDTO = CreateSnippetPermissionDTO(snippetId, ownership)
-                val request = HttpEntity(createSnippetPermissionDTO, getHeaders(token))
-                rest.postForEntity("$permissionUrl", request, String::class.java)
-                return ResponseEntity.ok(null)
+                val request = HttpEntity(null, getHeaders(token))
+                return rest.postForEntity("$permissionUrl/$snippetId", request, Any::class.java)
             } catch (e: Exception) {
-                println(e.message)
-                return ResponseEntity.badRequest().build()
+                return ResponseEntity.badRequest().body(e.message)
             }
         }
 
-        fun getPermission(snippetId: String, token: String): ResponseEntity<String> {
+        fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String): ResponseEntity<Any> {
+            try {
+                val request = HttpEntity(shareSnippetDTO, getHeaders(token))
+                return rest.postForEntity("$permissionUrl/share", request, Any::class.java)
+            } catch (e: Exception) {
+                return ResponseEntity.badRequest().body(e.message)
+            }
+        }
+
+        fun getPermission(snippetId: String, token: String): ResponseEntity<Any> {
             try {
                 val request = HttpEntity(null, getHeaders(token))
-                val res = rest.exchange("$permissionUrl/$snippetId", HttpMethod.GET, request, String::class.java)
-                return ResponseEntity.ok(res.body)
+                return rest.exchange("$permissionUrl/$snippetId", HttpMethod.GET, request, Any::class.java)
+            } catch (e: Exception) {
+                return ResponseEntity.badRequest().body(e.message)
+            }
+        }
+
+        fun deleteSnippetPermissions(snippetId: String, token: String): ResponseEntity<Any> {
+            try {
+                val request = HttpEntity(null, getHeaders(token))
+                return rest.exchange("$permissionUrl/$snippetId", HttpMethod.DELETE, request, Any::class.java)
             } catch (e: Exception) {
                 return ResponseEntity.badRequest().body(e.message)
             }

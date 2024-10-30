@@ -35,4 +35,16 @@ class AssetService
         ): String {
             return rest.getForEntity("$bucketUrl/$snippetId", String::class.java).body!!
         }
+
+        fun deleteSnippet(
+            snippetId: String,
+        ): ResponseEntity<Any> {
+            try {
+                val request = HttpEntity(null, HttpHeaders())
+                rest.delete("$bucketUrl/$snippetId", request)
+                return ResponseEntity.ok(null)
+            } catch (e: Exception) {
+                return ResponseEntity.badRequest().build()
+            }
+        }
     }
