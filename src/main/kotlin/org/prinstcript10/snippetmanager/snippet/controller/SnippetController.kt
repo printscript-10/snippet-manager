@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -38,8 +39,15 @@ class SnippetController(
     fun getSnippet(
         @PathVariable("snippetId") snippetId: String,
         @AuthenticationPrincipal jwt: Jwt,
-    ): String {
+    ): SnippetDTO {
         return snippetService.getSnippet(snippetId, jwt.tokenValue)
+    }
+
+    @GetMapping()
+    fun getAllSnippets(
+        @AuthenticationPrincipal jwt: Jwt,
+    ): List<SnippetDTO> {
+        return snippetService.getAllSnippets(jwt.tokenValue)
     }
 
     @PutMapping("{snippetId}")

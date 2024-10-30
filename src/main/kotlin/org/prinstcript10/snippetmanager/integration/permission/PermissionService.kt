@@ -3,6 +3,7 @@ package org.prinstcript10.snippetmanager.integration.permission
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -44,6 +45,20 @@ class PermissionService
                 return rest.exchange("$permissionUrl/$snippetId", HttpMethod.GET, request, Any::class.java)
             } catch (e: Exception) {
                 return ResponseEntity.badRequest().body(e.message)
+            }
+        }
+
+        fun getAllSnippetPermissions(token: String): ResponseEntity<List<SnippetPermissionDTO>> {
+            return try {
+                val request = HttpEntity(null, getHeaders(token))
+                rest.exchange(
+                    permissionUrl,
+                    HttpMethod.GET,
+                    request,
+                    object : ParameterizedTypeReference<List<SnippetPermissionDTO>>() {},
+                )
+            } catch (e: Exception) {
+                ResponseEntity.badRequest().body(null)
             }
         }
 

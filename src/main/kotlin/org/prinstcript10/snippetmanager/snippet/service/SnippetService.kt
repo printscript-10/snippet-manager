@@ -5,6 +5,7 @@ import com.google.gson.JsonParser
 import org.prinstcript10.snippetmanager.integration.asset.AssetService
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
 import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
+import org.prinstcript10.snippetmanager.integration.permission.SnippetPermissionDTO
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
@@ -12,6 +13,7 @@ import org.prinstcript10.snippetmanager.shared.exception.NotFoundException
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
@@ -67,7 +69,7 @@ class SnippetService
             }
         }
 
-        fun getSnippet(snippetId: String, token: String): String {
+        fun getSnippet(snippetId: String, token: String): SnippetDTO {
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -76,7 +78,37 @@ class SnippetService
                 throw BadRequestException(extractMessage(permission.body!!.toString(), "message"))
             }
 
-            return assetService.getSnippet(snippetId)
+            val snippet = assetService.getSnippet(snippetId)
+
+            return SnippetDTO(existingSnippet.name, existingSnippet.language, snippet)
+        }
+
+        fun getAllSnippets(token: String): List<SnippetDTO> {
+            val response = permissionService.getAllSnippetPermissions(token)
+            if (response.statusCode.isError) {
+                throw BadRequestException("Failed to retrieve permissions: ${response.body}")
+            }
+
+            val snippetPermissions = response.body as? List<SnippetPermissionDTO>
+                ?: throw BadRequestException("Unexpected response format")
+
+            val snippets = mutableListOf<SnippetDTO>()
+
+            for (permission in snippetPermissions) {
+                val existingSnippet = snippetRepository.findById(permission.snippetId)
+                    .orElseThrow { NotFoundException("Snippet with ID ${permission.snippetId} not found") }
+
+                val snippetContent = assetService.getSnippet(permission.snippetId)
+
+                val snippetDTO = SnippetDTO(
+                    name = existingSnippet.name,
+                    language = existingSnippet.language,
+                    snippet = snippetContent,
+                )
+                snippets.add(snippetDTO)
+            }
+
+            return snippets
         }
 
         fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {
