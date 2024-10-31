@@ -83,7 +83,8 @@ class SnippetService
             return SnippetDTO(existingSnippet.name, existingSnippet.language, snippet)
         }
 
-        fun getAllSnippets(token: String): List<SnippetDTO> {
+        fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): List<Snippet> {
+            val offset = page * pageSize
             val response = permissionService.getAllSnippetPermissions(token)
             if (response.statusCode.isError) {
                 throw BadRequestException("Failed to retrieve permissions: ${response.body}")
@@ -92,21 +93,9 @@ class SnippetService
             val snippetPermissions = response.body as? List<SnippetPermissionDTO>
                 ?: throw BadRequestException("Unexpected response format")
 
-            val snippets = mutableListOf<SnippetDTO>()
+            val snippetIds: List<String> = snippetPermissions.map { it.snippetId }
 
-            for (permission in snippetPermissions) {
-                val existingSnippet = snippetRepository.findById(permission.snippetId)
-                    .orElseThrow { NotFoundException("Snippet with ID ${permission.snippetId} not found") }
-
-                val snippetContent = assetService.getSnippet(permission.snippetId)
-
-                val snippetDTO = SnippetDTO(
-                    name = existingSnippet.name,
-                    language = existingSnippet.language,
-                    snippet = snippetContent,
-                )
-                snippets.add(snippetDTO)
-            }
+            val snippets = snippetRepository.findAll(snippetIds, pageSize, offset, param)
 
             return snippets
         }

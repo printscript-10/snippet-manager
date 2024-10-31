@@ -5,6 +5,7 @@ import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -45,9 +47,12 @@ class SnippetController(
 
     @GetMapping()
     fun getAllSnippets(
+        @RequestParam("page", defaultValue = "0") page: Int,
+        @RequestParam("pageSize", defaultValue = "10") pageSize: Int,
+        @RequestParam("param", defaultValue = "") param: String,
         @AuthenticationPrincipal jwt: Jwt,
-    ): List<SnippetDTO> {
-        return snippetService.getAllSnippets(jwt.tokenValue)
+    ): List<Snippet> {
+        return snippetService.getAllSnippets(jwt.tokenValue, page, pageSize, param)
     }
 
     @PutMapping("{snippetId}")
