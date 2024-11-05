@@ -1,11 +1,5 @@
 package org.prinstcript10.snippetmanager.testCase.service
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import com.google.gson.JsonSyntaxException
-import org.prinstcript10.snippetmanager.integration.asset.AssetService
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
 import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
 import org.prinstcript10.snippetmanager.integration.permission.SnippetPermissionDTO
@@ -23,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class TestCaseService (
+class TestCaseService(
     @Autowired
     private val testCaseRepository: TestCaseRepository,
     private val permissionService: PermissionService,
     private val runnerServices: Map<SnippetLanguage, RunnerService>,
-    private val snippetRepository: SnippetRepository
+    private val snippetRepository: SnippetRepository,
 ) {
 
     fun addTestCase(createTestCaseDTO: CreateTestCaseDTO, snippetId: String, token: String) {
@@ -49,7 +43,7 @@ class TestCaseService (
             name = createTestCaseDTO.name,
             input = createTestCaseDTO.inputs,
             output = createTestCaseDTO.outputs,
-            snippet = snippet
+            snippet = snippet,
         )
 
         testCaseRepository.save(testCase)
@@ -74,13 +68,12 @@ class TestCaseService (
             inputs = test.input,
             expectedOutputs = test.output,
             actualOutputs = runnerResponse.body!!.outputs,
-            errors = runnerResponse.body!!.errors
+            errors = runnerResponse.body!!.errors,
         )
 
-        if (runnerResponse.body!!.outputs != test.output || runnerResponse.body!!.errors.isNotEmpty()){
+        if (runnerResponse.body!!.outputs != test.output || runnerResponse.body!!.errors.isNotEmpty()) {
             response.success = false
         }
         return response
-
     }
 }

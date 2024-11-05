@@ -6,5 +6,5 @@ data class CreateTestCaseDTO(
     @NotBlank(message = "Name should not be empty")
     val name: String,
     val inputs: List<String>,
-    val outputs: List<String>
+    val outputs: List<String>,
 )

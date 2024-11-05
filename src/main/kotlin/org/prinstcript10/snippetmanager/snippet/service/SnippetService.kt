@@ -5,7 +5,6 @@ import com.google.gson.JsonParser
 import org.prinstcript10.snippetmanager.integration.asset.AssetService
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
 import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
-import org.prinstcript10.snippetmanager.integration.permission.SnippetPermissionDTO
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
@@ -146,10 +145,10 @@ class SnippetService
 
             val jsonObject: JsonObject = JsonParser.parseString(parsedJsonString).asJsonObject
 
-            val field = jsonObject.get(field)?.asString
+            val res = jsonObject.get(field)?.asString
 
-            if (field == null) throw ConflictException("Invalid field")
+            if (res == null) throw ConflictException("Invalid field")
 
-            return field
+            return res
         }
     }

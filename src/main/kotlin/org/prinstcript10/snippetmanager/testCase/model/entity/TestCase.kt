@@ -25,5 +25,5 @@ data class TestCase(
 
     @ManyToOne
     @JoinColumn(name = "snippetId", referencedColumnName = "id", nullable = false)
-    val snippet: Snippet? = null
+    val snippet: Snippet? = null,
 ) : BaseModel()

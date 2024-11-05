@@ -33,17 +33,26 @@ class PrintscriptRunnerService
             }
         }
 
-    override fun runSnippet(inputs: List<String>, snippetId: String, token: String): ResponseEntity<RunSnippetResponseDTO> {
-        try {
-            val runSnippetDTO = RunSnippetDTO(inputs)
-            val request = HttpEntity(runSnippetDTO, getHeaders(token))
-            return rest.exchange("$runnerUrl/run/$snippetId", HttpMethod.POST, request, RunSnippetResponseDTO::class.java)
-        } catch (e: HttpClientErrorException) {
-            throw e
+        override fun runSnippet(
+            inputs: List<String>,
+            snippetId: String,
+            token: String,
+        ): ResponseEntity<RunSnippetResponseDTO> {
+            try {
+                val runSnippetDTO = RunSnippetDTO(inputs)
+                val request = HttpEntity(runSnippetDTO, getHeaders(token))
+                return rest.exchange(
+                    "$runnerUrl/run/$snippetId",
+                    HttpMethod.POST,
+                    request,
+                    RunSnippetResponseDTO::class.java,
+                )
+            } catch (e: HttpClientErrorException) {
+                throw e
+            }
         }
-    }
 
-    private fun getHeaders(token: String): HttpHeaders {
+        private fun getHeaders(token: String): HttpHeaders {
             return HttpHeaders().apply {
                 set("Authorization", "Bearer $token")
             }

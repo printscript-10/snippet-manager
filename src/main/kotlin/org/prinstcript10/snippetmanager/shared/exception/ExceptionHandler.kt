@@ -65,5 +65,4 @@ class ExceptionHandler {
 
         return ResponseEntity(errorDetails, HttpStatus.CONFLICT)
     }
-
 }

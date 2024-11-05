@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class TestCaseController(
     @Autowired
-    private val testCaseService: TestCaseService
+    private val testCaseService: TestCaseService,
 ) {
     @PostMapping("/{snippetId}")
     fun addTest(
         @PathVariable("snippetId") snippetId: String,
         @Valid @RequestBody createTestCaseDTO: CreateTestCaseDTO,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ) {
         return testCaseService.addTestCase(createTestCaseDTO, snippetId, jwt.tokenValue)
     }
@@ -34,7 +34,7 @@ class TestCaseController(
     @PutMapping("/{testId}")
     fun runTest(
         @PathVariable("testId") testId: String,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): RunTestCaseResponseDTO {
         return testCaseService.runTestCase(testId, jwt.tokenValue)
     }

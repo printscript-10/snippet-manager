@@ -17,5 +17,5 @@ data class Snippet(
     val language: SnippetLanguage = SnippetLanguage.PRINTSCRIPT,
 
     @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "snippet")
-    val testCases: List<TestCase> = listOf()
+    val testCases: List<TestCase> = listOf(),
 ) : BaseModel()
