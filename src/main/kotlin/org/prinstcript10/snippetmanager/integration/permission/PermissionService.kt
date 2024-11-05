@@ -7,10 +7,11 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.postForEntity
 
 @Component
 class PermissionService
@@ -26,7 +27,8 @@ class PermissionService
                 val request = HttpEntity(null, getHeaders(token))
                 return rest.postForEntity("$permissionUrl/$snippetId", request, Any::class.java)
             } catch (e: Exception) {
-                return ResponseEntity.badRequest().body(e.message)
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(mapOf("error" to "Failed to create permission", "message" to e.message))
             }
         }
 
@@ -34,17 +36,17 @@ class PermissionService
             try {
                 val request = HttpEntity(shareSnippetDTO, getHeaders(token))
                 return rest.postForEntity("$permissionUrl/share", request, Any::class.java)
-            } catch (e: Exception) {
-                return ResponseEntity.badRequest().body(e.message)
+            } catch (e: HttpClientErrorException) {
+                throw e
             }
         }
 
-        fun getPermission(snippetId: String, token: String): ResponseEntity<Any> {
-            try {
+        fun getPermission(snippetId: String, token: String): ResponseEntity<SnippetPermissionDTO> {
+            return try {
                 val request = HttpEntity(null, getHeaders(token))
-                return rest.exchange("$permissionUrl/$snippetId", HttpMethod.GET, request, Any::class.java)
-            } catch (e: Exception) {
-                return ResponseEntity.badRequest().body(e.message)
+                rest.exchange("$permissionUrl/$snippetId", HttpMethod.GET, request, SnippetPermissionDTO::class.java)
+            } catch (e: HttpClientErrorException) {
+                throw e
             }
         }
 
@@ -57,8 +59,8 @@ class PermissionService
                     request,
                     object : ParameterizedTypeReference<List<SnippetPermissionDTO>>() {},
                 )
-            } catch (e: Exception) {
-                ResponseEntity.badRequest().body(null)
+            } catch (e: HttpClientErrorException) {
+                throw e
             }
         }
 
@@ -66,8 +68,8 @@ class PermissionService
             try {
                 val request = HttpEntity(null, getHeaders(token))
                 return rest.exchange("$permissionUrl/$snippetId", HttpMethod.DELETE, request, Any::class.java)
-            } catch (e: Exception) {
-                return ResponseEntity.badRequest().body(e.message)
+            } catch (e: HttpClientErrorException) {
+                throw e
             }
         }
 

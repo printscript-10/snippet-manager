@@ -6,6 +6,6 @@ data class EditSnippetDTO(
     @NotBlank(message = "Name is required")
     val name: String,
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Snippet is required")
     val snippet: String,
 )

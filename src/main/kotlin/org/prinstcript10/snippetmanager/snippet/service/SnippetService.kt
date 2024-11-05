@@ -35,14 +35,10 @@ class SnippetService
             token: String,
         ) {
             // VALIDATE SNIPPET
-            val runnerResponse = runnerServices[createSnippetDTO.language]!!.validateSnippet(
+            runnerServices[createSnippetDTO.language]!!.validateSnippet(
                 createSnippetDTO.snippet,
                 token,
             )
-
-            if (runnerResponse.statusCode.isError) {
-                throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
-            }
 
             // CREATE SNIPPET
             val snippet = snippetRepository.save(
@@ -73,10 +69,7 @@ class SnippetService
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
-            val permission = permissionService.getPermission(snippetId, token)
-            if (permission.statusCode.isError) {
-                throw BadRequestException(extractMessage(permission.body!!.toString(), "message"))
-            }
+            permissionService.getPermission(snippetId, token)
 
             val snippet = assetService.getSnippet(snippetId)
 
@@ -86,11 +79,8 @@ class SnippetService
         fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): List<Snippet> {
             val offset = page * pageSize
             val response = permissionService.getAllSnippetPermissions(token)
-            if (response.statusCode.isError) {
-                throw BadRequestException("Failed to retrieve permissions: ${response.body}")
-            }
 
-            val snippetPermissions = response.body as? List<SnippetPermissionDTO>
+            val snippetPermissions = response.body
                 ?: throw BadRequestException("Unexpected response format")
 
             val snippetIds: List<String> = snippetPermissions.map { it.snippetId }
@@ -106,26 +96,18 @@ class SnippetService
 
             val permission = permissionService.getPermission(snippetId, token)
 
-            if (permission.statusCode.isError) {
-                throw BadRequestException(extractMessage(permission.body!!.toString(), "message"))
-            }
+            val ownership = permission.body!!.ownership
 
-            val ownership = extractMessage(permission.body!!.toString(), "ownership")
-
-            if (ownership != SnippetOwnership.OWNER.toString()) {
+            if (ownership != SnippetOwnership.OWNER) {
                 throw BadRequestException(
                     "User is not the snippet owner",
                 )
             }
 
-            val runnerResponse = runnerServices[existingSnippet.language]!!.validateSnippet(
+            runnerServices[existingSnippet.language]!!.validateSnippet(
                 editSnippetDTO.snippet,
                 token,
             )
-
-            if (runnerResponse.statusCode.isError) {
-                throw BadRequestException(extractMessage(runnerResponse.body!!.toString(), "message"))
-            }
 
             existingSnippet.name = editSnippetDTO.name
 
@@ -138,30 +120,18 @@ class SnippetService
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
-            val permission = permissionService.deleteSnippetPermissions(snippetId, token)
+            permissionService.deleteSnippetPermissions(snippetId, token)
 
-            if (permission.statusCode.isError) {
-                throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
-            }
-
-            val assetResponse = assetService.deleteSnippet(snippetId)
-
-            if (assetResponse.statusCode.isError) {
-                throw ConflictException("Error deleting snippet from asset service")
-            }
+            assetService.deleteSnippet(snippetId)
 
             snippetRepository.delete(existingSnippet)
         }
 
         fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String) {
-            val existingSnippet = snippetRepository.findById(shareSnippetDTO.snippetId)
+            snippetRepository.findById(shareSnippetDTO.snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID ${shareSnippetDTO.snippetId} not found") }
 
-            val permission = permissionService.shareSnippet(shareSnippetDTO, token)
-
-            if (permission.statusCode.isError) {
-                throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
-            }
+            permissionService.shareSnippet(shareSnippetDTO, token)
         }
 
         private fun extractMessage(jsonString: String, field: String): String {

@@ -1,4 +1,4 @@
-package org.prinstcript10.snippetmanager.snippet.config
+package org.prinstcript10.snippetmanager.integration.runner.config
 
 import org.prinstcript10.snippetmanager.integration.runner.PrintscriptRunnerService
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
