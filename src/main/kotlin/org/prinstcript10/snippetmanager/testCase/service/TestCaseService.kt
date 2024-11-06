@@ -2,7 +2,7 @@ package org.prinstcript10.snippetmanager.testCase.service
 
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
 import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
-import org.prinstcript10.snippetmanager.integration.permission.SnippetPermissionDTO
+import org.prinstcript10.snippetmanager.integration.permission.dto.SnippetPermissionDTO
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException

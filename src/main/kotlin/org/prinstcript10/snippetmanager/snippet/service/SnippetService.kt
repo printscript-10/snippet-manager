@@ -32,7 +32,7 @@ class SnippetService
         fun createSnippet(
             createSnippetDTO: CreateSnippetDTO,
             token: String,
-        ) {
+        ): SnippetDTO {
             // VALIDATE SNIPPET
             runnerServices[createSnippetDTO.language]!!.validateSnippet(
                 createSnippetDTO.snippet,
@@ -62,6 +62,14 @@ class SnippetService
                 snippetRepository.delete(snippet)
                 throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
             }
+
+            return SnippetDTO(
+                snippet.id,
+                snippet.name,
+                createSnippetDTO.language,
+                snippet.language.toString(),
+                snippet.language.getExtension(),
+            )
         }
 
         fun getSnippet(snippetId: String, token: String): SnippetDTO {
@@ -72,7 +80,13 @@ class SnippetService
 
             val snippet = assetService.getSnippet(snippetId)
 
-            return SnippetDTO(existingSnippet.name, existingSnippet.language, snippet)
+            return SnippetDTO(
+                snippetId,
+                existingSnippet.name,
+                existingSnippet.language,
+                snippet,
+                existingSnippet.language.getExtension(),
+            )
         }
 
         fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): List<Snippet> {

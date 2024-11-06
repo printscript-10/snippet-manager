@@ -33,7 +33,7 @@ class SnippetController(
     fun createSnippet(
         @Valid @RequestBody createSnippetDTO: CreateSnippetDTO,
         @AuthenticationPrincipal jwt: Jwt,
-    ) {
+    ): SnippetDTO {
         return snippetService.createSnippet(createSnippetDTO, jwt.tokenValue)
     }
 

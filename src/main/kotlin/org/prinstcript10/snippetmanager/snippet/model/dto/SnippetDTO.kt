@@ -5,6 +5,7 @@ import org.prinstcript10.snippetmanager.shared.enumValidator.EnumFormat
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 
 data class SnippetDTO(
+    val id: String,
     @NotBlank(message = "Name is required")
     val name: String,
 
@@ -12,4 +13,5 @@ data class SnippetDTO(
     val language: SnippetLanguage,
 
     val snippet: String?,
+    val extension: String,
 )

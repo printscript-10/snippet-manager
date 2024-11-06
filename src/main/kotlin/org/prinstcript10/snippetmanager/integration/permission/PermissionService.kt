@@ -1,5 +1,6 @@
 package org.prinstcript10.snippetmanager.integration.permission
 
+import org.prinstcript10.snippetmanager.integration.permission.dto.SnippetPermissionDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
