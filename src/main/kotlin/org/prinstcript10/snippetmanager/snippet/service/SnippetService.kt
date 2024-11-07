@@ -11,6 +11,9 @@ import org.prinstcript10.snippetmanager.shared.exception.ConflictException
 import org.prinstcript10.snippetmanager.shared.exception.NotFoundException
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.GetSnippetLanguageDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetsDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
@@ -64,11 +67,11 @@ class SnippetService
             }
 
             return SnippetDTO(
-                snippet.id,
-                snippet.name,
-                createSnippetDTO.language,
-                snippet.language.toString(),
-                snippet.language.getExtension(),
+                id = snippet.id,
+                name = snippet.name,
+                language = createSnippetDTO.language,
+                extension = snippet.language.getExtension(),
+                content = createSnippetDTO.snippet,
             )
         }
 
@@ -81,15 +84,24 @@ class SnippetService
             val snippet = assetService.getSnippet(snippetId)
 
             return SnippetDTO(
-                snippetId,
-                existingSnippet.name,
-                existingSnippet.language,
-                snippet,
-                existingSnippet.language.getExtension(),
+                id = snippetId,
+                name = existingSnippet.name,
+                language = existingSnippet.language,
+                extension = existingSnippet.language.getExtension(),
+                content = snippet,
             )
         }
 
-        fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): List<Snippet> {
+        fun getSnippetLanguages(): List<GetSnippetLanguageDTO> {
+            return SnippetLanguage.entries.map {
+                GetSnippetLanguageDTO(
+                    language = it.name,
+                    extension = it.getExtension(),
+                )
+            }
+        }
+
+        fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): PaginatedSnippetsDTO {
             val offset = page * pageSize
             val response = permissionService.getAllSnippetPermissions(token)
 
@@ -100,7 +112,18 @@ class SnippetService
 
             val snippets = snippetRepository.findAll(snippetIds, pageSize, offset, param)
 
-            return snippets
+            return PaginatedSnippetsDTO(
+                snippets = snippets.map {
+                    PaginatedSnippetDTO(
+                        id = it.id!!,
+                        name = it.name,
+                        language = it.language.name,
+                        extension = it.language.getExtension(),
+                        compliance = "compliant",
+                        author = "nipe",
+                    )
+                },
+            )
         }
 
         fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {

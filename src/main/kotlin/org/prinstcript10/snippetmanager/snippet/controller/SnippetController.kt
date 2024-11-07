@@ -3,9 +3,10 @@ package org.prinstcript10.snippetmanager.snippet.controller
 import jakarta.validation.Valid
 import org.prinstcript10.snippetmanager.snippet.model.dto.CreateSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.EditSnippetDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.GetSnippetLanguageDTO
+import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetsDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
-import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -51,8 +52,13 @@ class SnippetController(
         @RequestParam("pageSize", defaultValue = "10") pageSize: Int,
         @RequestParam("param", defaultValue = "") param: String,
         @AuthenticationPrincipal jwt: Jwt,
-    ): List<Snippet> {
+    ): PaginatedSnippetsDTO {
         return snippetService.getAllSnippets(jwt.tokenValue, page, pageSize, param)
+    }
+
+    @GetMapping("languages")
+    fun getSnippetLanguages(): List<GetSnippetLanguageDTO> {
+        return snippetService.getSnippetLanguages()
     }
 
     @PutMapping("{snippetId}")
