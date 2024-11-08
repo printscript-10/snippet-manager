@@ -30,20 +30,20 @@ class SnippetController(
     private val snippetService: SnippetService,
 ) {
 
-    @PostMapping
-    fun createSnippet(
-        @Valid @RequestBody createSnippetDTO: CreateSnippetDTO,
-        @AuthenticationPrincipal jwt: Jwt,
-    ): SnippetDTO {
-        return snippetService.createSnippet(createSnippetDTO, jwt.tokenValue)
-    }
-
     @GetMapping("{snippetId}")
     fun getSnippet(
         @PathVariable("snippetId") snippetId: String,
         @AuthenticationPrincipal jwt: Jwt,
     ): SnippetDTO {
         return snippetService.getSnippet(snippetId, jwt.tokenValue)
+    }
+
+    @PostMapping
+    fun createSnippet(
+        @Valid @RequestBody createSnippetDTO: CreateSnippetDTO,
+        @AuthenticationPrincipal jwt: Jwt,
+    ): SnippetDTO {
+        return snippetService.createSnippet(createSnippetDTO, jwt.tokenValue)
     }
 
     @GetMapping()

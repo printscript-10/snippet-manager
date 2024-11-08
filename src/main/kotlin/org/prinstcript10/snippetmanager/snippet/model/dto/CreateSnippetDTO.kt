@@ -11,6 +11,6 @@ data class CreateSnippetDTO(
     @EnumFormat(enumClass = SnippetLanguage::class, message = "Invalid language")
     val language: SnippetLanguage,
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Snippet is required")
     val snippet: String,
 )

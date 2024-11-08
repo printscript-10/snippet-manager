@@ -12,6 +12,7 @@ import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
 import org.prinstcript10.snippetmanager.snippet.repository.TestCaseRepository
 import org.prinstcript10.snippetmanager.testCase.model.dto.CreateTestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseResponseDTO
+import org.prinstcript10.snippetmanager.testCase.model.dto.TestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.entity.TestCase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -75,5 +76,31 @@ class TestCaseService(
             response.success = false
         }
         return response
+    }
+
+    fun getSnippetTests(snippetId: String, token: String): List<TestCaseDTO> {
+        snippetRepository.findById(snippetId)
+            .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
+
+        return testCaseRepository.findBySnippetId(snippetId).map { testCase ->
+            TestCaseDTO(
+                id = testCase.id!!,
+                name = testCase.name,
+                input = testCase.input,
+                output = testCase.output,
+            )
+        }
+    }
+
+    fun deleteTestCase(testId: String, token: String) {
+        val existingTest = testCaseRepository.findById(testId)
+            .orElseThrow { NotFoundException("Snippet with ID $testId not found") }
+
+        val snippetId = existingTest.snippet?.id
+            ?: throw ConflictException("Error finding the snippet for that test")
+
+        permissionService.getPermission(snippetId, token)
+
+        testCaseRepository.deleteById(testId)
     }
 }

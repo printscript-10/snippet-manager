@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.prinstcript10.snippetmanager.integration.asset.AssetService
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
-import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
@@ -130,26 +129,24 @@ class SnippetService
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
-            val permission = permissionService.getPermission(snippetId, token)
+            permissionService.getPermission(snippetId, token)
 
-            val ownership = permission.body!!.ownership
-
-            if (ownership != SnippetOwnership.OWNER) {
-                throw BadRequestException(
-                    "User is not the snippet owner",
-                )
-            }
+//            val permission = permissionService.getPermission(snippetId, token)
+//
+//            val ownership = permission.body!!.ownership
+//
+//            if (ownership != SnippetOwnership.OWNER) {
+//                throw BadRequestException(
+//                    "User is not the snippet owner",
+//                )
+//            }
 
             runnerServices[existingSnippet.language]!!.validateSnippet(
                 editSnippetDTO.snippet,
                 token,
             )
 
-            existingSnippet.name = editSnippetDTO.name
-
             assetService.saveSnippet(snippetId, editSnippetDTO.snippet)
-
-            snippetRepository.save(existingSnippet)
         }
 
         fun deleteSnippet(snippetId: String, token: String) {
