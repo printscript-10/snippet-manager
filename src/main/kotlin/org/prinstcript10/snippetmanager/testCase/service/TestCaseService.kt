@@ -11,6 +11,7 @@ import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
 import org.prinstcript10.snippetmanager.snippet.repository.TestCaseRepository
 import org.prinstcript10.snippetmanager.testCase.model.dto.CreateTestCaseDTO
+import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseResponseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.TestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.entity.TestCase
@@ -42,15 +43,15 @@ class TestCaseService(
 
         val testCase = TestCase(
             name = createTestCaseDTO.name,
-            input = createTestCaseDTO.inputs,
-            output = createTestCaseDTO.outputs,
+            input = createTestCaseDTO.inputs ?: listOf(),
+            output = createTestCaseDTO.outputs ?: listOf(),
             snippet = snippet,
         )
 
         testCaseRepository.save(testCase)
     }
 
-    fun runTestCase(testId: String, token: String): RunTestCaseResponseDTO {
+    fun runTestCaseById(testId: String, token: String): RunTestCaseResponseDTO {
         val test = testCaseRepository.findById(testId).orElseThrow {
             BadRequestException("No TestCase with that Id found")
         }
@@ -73,6 +74,30 @@ class TestCaseService(
         )
 
         if (runnerResponse.body!!.outputs != test.output || runnerResponse.body!!.errors.isNotEmpty()) {
+            response.success = false
+        }
+        return response
+    }
+
+    fun runTestCase(testCaseDTO: RunTestCaseDTO, token: String): RunTestCaseResponseDTO {
+        val snippet = snippetRepository.findById(testCaseDTO.snippetId)
+            .orElseThrow { throw NotFoundException("Snippet not found with id: ${testCaseDTO.snippetId}") }
+
+        val runnerResponse = runnerServices[snippet.language]!!.runSnippet(
+            testCaseDTO.input ?: listOf(),
+            snippet.id!!,
+            token,
+        )
+
+        val response = RunTestCaseResponseDTO(
+            success = true,
+            inputs = testCaseDTO.input ?: listOf(),
+            expectedOutputs = testCaseDTO.output ?: listOf(),
+            actualOutputs = runnerResponse.body!!.outputs,
+            errors = runnerResponse.body!!.errors,
+        )
+
+        if (runnerResponse.body!!.outputs != testCaseDTO.output || runnerResponse.body!!.errors.isNotEmpty()) {
             response.success = false
         }
         return response

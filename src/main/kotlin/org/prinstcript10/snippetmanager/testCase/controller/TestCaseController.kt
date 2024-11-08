@@ -2,6 +2,7 @@ package org.prinstcript10.snippetmanager.testCase.controller
 
 import jakarta.validation.Valid
 import org.prinstcript10.snippetmanager.testCase.model.dto.CreateTestCaseDTO
+import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseResponseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.TestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.service.TestCaseService
@@ -34,12 +35,20 @@ class TestCaseController(
         return testCaseService.addTestCase(createTestCaseDTO, snippetId, jwt.tokenValue)
     }
 
-    @PutMapping("/{testId}")
+    @PutMapping()
     fun runTest(
+        @Valid @RequestBody runTestCaseDTO: RunTestCaseDTO,
+        @AuthenticationPrincipal jwt: Jwt,
+    ): RunTestCaseResponseDTO {
+        return testCaseService.runTestCase(runTestCaseDTO, jwt.tokenValue)
+    }
+
+    @PutMapping("/{testId}")
+    fun runTestById(
         @PathVariable("testId") testId: String,
         @AuthenticationPrincipal jwt: Jwt,
     ): RunTestCaseResponseDTO {
-        return testCaseService.runTestCase(testId, jwt.tokenValue)
+        return testCaseService.runTestCaseById(testId, jwt.tokenValue)
     }
 
     @DeleteMapping("/{testId}")
