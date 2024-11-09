@@ -6,7 +6,7 @@ import org.prinstcript10.snippetmanager.rules.model.enum.RuleType
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
-interface RulesRepository : JpaRepository<Rule, String> {
+interface RuleRepository : JpaRepository<Rule, String> {
     @Query(
         """
         SELECT new org.prinstcript10.snippetmanager.rules.model.dto.GetRuleDTO(

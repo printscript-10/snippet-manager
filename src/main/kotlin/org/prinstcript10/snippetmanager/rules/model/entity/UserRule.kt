@@ -12,9 +12,9 @@ import org.prinstcript10.snippetmanager.shared.baseModel.BaseModel
 data class UserRule(
     val userId: String = "",
 
-    val value: String = "",
+    var value: String = "",
 
-    val isActive: Boolean = false,
+    var isActive: Boolean = false,
 
     @ManyToOne
     @JoinColumn(name = "ruleId", referencedColumnName = "id", nullable = false)

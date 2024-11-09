@@ -47,6 +47,12 @@ services:
     volumes:
       - blob:/workspace
 
+  redis:
+    container_name: "snippets-redis"
+    image: redis:6-alpine
+    ports:
+        - "6379:6379"
+
 volumes:
   snippet_manager_data:
   blob:
