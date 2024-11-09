@@ -7,7 +7,7 @@ data class GetRuleDTO(
     val id: String,
     val name: String,
     val value: String?,
-    val active: Boolean? = false,
+    val isActive: Boolean? = false,
     val valueType: ValueType,
     val ruleType: RuleType,
 )

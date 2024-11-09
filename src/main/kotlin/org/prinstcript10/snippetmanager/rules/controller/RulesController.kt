@@ -1,5 +1,7 @@
 package org.prinstcript10.snippetmanager.rules.controller
 
+import jakarta.validation.Valid
+import org.prinstcript10.snippetmanager.rules.model.dto.AddUserRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.GetRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.enum.RuleType
 import org.prinstcript10.snippetmanager.rules.service.RulesService
@@ -9,6 +11,8 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,13 +24,14 @@ class RulesController(
     private val rulesService: RulesService,
 ) {
 
-//    @PostMapping
-//    fun addRule(
-//        @Valid @RequestBody rules: List<AddUserRuleDTO>,
-//        @AuthenticationPrincipal jwt: Jwt,
-//    ) {
-//        return rulesService.updateUserRules(rules, jwt.subject)
-//    }
+    @PostMapping("/{ruleType}")
+    fun addRules(
+        @Valid @RequestBody rules: List<AddUserRuleDTO>,
+        @PathVariable ruleType: RuleType,
+        @AuthenticationPrincipal jwt: Jwt,
+    ) {
+        return rulesService.updateUserRules(rules, ruleType, jwt.subject)
+    }
 
     @GetMapping("/{ruleType}")
     fun getRule(

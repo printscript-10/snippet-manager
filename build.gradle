@@ -8,6 +8,14 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
+      credentials {
+        username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+        password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+      }
+    }
 }
 
 configurations {
@@ -33,6 +41,8 @@ dependencies {
             attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
         }
     }
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.austral.ingsis:redis-streams-mvc:0.1.13'
 }
 
 jacocoTestCoverageVerification {
