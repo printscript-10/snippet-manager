@@ -52,7 +52,7 @@ jobs:
           script: |
             cd infra
             sudo docker login --username $USERNAME --password $TOKEN ghcr.io
-            sudo docker-compose -f docker-compose.dev.yml stop ${{ github.repository }}-dev
+            sudo docker-compose -f docker-compose.dev.yml stop snippet-manager
             sudo docker system prune --force
-            sudo docker-compose -f docker-compose.dev.yml pull ${{ github.repository }}-dev
-            sudo docker-compose -f docker-compose.dev.yml up -d ${{ github.repository }}-dev
+            sudo docker-compose -f docker-compose.dev.yml pull snippet-manager
+            sudo docker-compose -f docker-compose.dev.yml up -d snippet-manager
