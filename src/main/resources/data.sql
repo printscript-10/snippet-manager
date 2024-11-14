@@ -1,3 +1,13 @@
+CREATE TABLE IF NOT EXISTS rule (
+    id varchar(255) not null,
+    created_at timestamp(6),
+    updated_at timestamp(6),
+    name varchar(255),
+    type varchar(255) check (type in ('LINT','FORMAT')),
+    value_type varchar(255) check (value_type in ('STRING','BOOLEAN','INTEGER')),
+    primary key (id)
+);
+
 -- LINTING RULES
 INSERT INTO rule (id, created_at, updated_at, name, type, value_type)
 VALUES ('d3908a96-da94-49b6-884b-f5b3a618e567', '2024-09-11 01:01:01.000001', '2024-09-11 01:01:01.000001', 'allow_expression_in_println', 'LINT', 'BOOLEAN')
