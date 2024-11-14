@@ -5,8 +5,11 @@ WORKDIR /home/gradle/src
 RUN gradle assemble
 FROM eclipse-temurin:21-jre
 
-ARG USERNAME=$USERNAME
-ARG TOKEN=$TOKEN
+ARG USERNAME
+ARG TOKEN
+
+ENV USERNAME=$USERNAME
+ENV TOKEN=$TOKEN
 
 RUN mkdir -p /usr/local/newrelic
 ADD ./newrelic/newrelic.jar /usr/local/newrelic/newrelic.jar
