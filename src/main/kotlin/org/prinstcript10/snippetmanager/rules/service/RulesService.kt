@@ -63,29 +63,30 @@ class RulesService
         }
 
         fun formatSnippet(snippet: String, token: String, userId: String): ResponseEntity<FormatSnippetResponseDTO> {
-            val formatRules = this.getRules(RuleType.FORMAT, token)
+            val formatRules: List<UserRule> = userRuleRepository.findAllByUserIdAndRuleType(userId, RuleType.FORMAT)
+            val formatConfig = FormatterConfig(null, null, null, null, null)
 
-            val formatConfig = FormatterConfig(
-                declaration_colon_trailing_whitespaces = formatRules
-                    .find { it.name == "declaration_colon_trailing_whitespaces" }
-                    ?.value?.toBoolean(),
-
-                declaration_colon_leading_whitespaces = formatRules
-                    .find { it.name == "declaration_colon_leading_whitespaces" }
-                    ?.value?.toBoolean(),
-
-                assignation_equal_wrap_whitespaces = formatRules
-                    .find { it.name == "assignation_equal_wrap_whitespaces" }
-                    ?.value?.toBoolean(),
-
-                println_trailing_line_jump = formatRules
-                    .find { it.name == "println_trailing_line_jump" }
-                    ?.value?.toIntOrNull(),
-
-                if_block_indent_spaces = formatRules
-                    .find { it.name == "if_block_indent_spaces" }
-                    ?.value?.toIntOrNull(),
-            )
+            formatRules.forEach {
+                if (it.isActive) {
+                    when (it.rule!!.name) {
+                        "declaration_colon_trailing_whitespaces" ->
+                            formatConfig.declaration_colon_trailing_whitespaces =
+                                it.value.toBoolean()
+                        "declaration_colon_leading_whitespaces" ->
+                            formatConfig.declaration_colon_leading_whitespaces =
+                                it.value.toBoolean()
+                        "assignation_equal_wrap_whitespaces" ->
+                            formatConfig.assignation_equal_wrap_whitespaces =
+                                it.value.toBoolean()
+                        "println_trailing_line_jump" ->
+                            formatConfig.println_trailing_line_jump =
+                                it.value.toInt()
+                        "if_block_indent_spaces" ->
+                            formatConfig.if_block_indent_spaces =
+                                it.value.toInt()
+                    }
+                }
+            }
 
             return runnerService.formatSnippet(snippet, formatConfig, token)
         }

@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS rule (
-    id varchar(255) not null,
-    created_at timestamp(6),
-    updated_at timestamp(6),
-    name varchar(255),
-    type varchar(255) check (type in ('LINT','FORMAT')),
-    value_type varchar(255) check (value_type in ('STRING','BOOLEAN','INTEGER')),
-    primary key (id)
+                                  id varchar(255) not null,
+                                  created_at timestamp(6),
+                                  updated_at timestamp(6),
+                                  name varchar(255),
+                                  type varchar(255) check (type in ('LINT','FORMAT')),
+                                  value_type varchar(255) check (value_type in ('STRING','BOOLEAN','INTEGER')),
+                                  primary key (id)
 );
 
 -- LINTING RULES

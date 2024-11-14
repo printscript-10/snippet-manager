@@ -3,6 +3,7 @@ package org.prinstcript10.snippetmanager.rules.controller
 import jakarta.validation.Valid
 import org.prinstcript10.snippetmanager.integration.runner.dto.FormatSnippetResponseDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.AddUserRuleDTO
+import org.prinstcript10.snippetmanager.rules.model.dto.FormatSnippetRequestDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.GetRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.enum.RuleType
 import org.prinstcript10.snippetmanager.rules.service.RulesService
@@ -45,9 +46,9 @@ class RulesController(
 
     @PostMapping("format")
     fun formatSnippet(
-        @Valid @RequestBody snippet: String,
+        @Valid @RequestBody snippet: FormatSnippetRequestDTO,
         @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<FormatSnippetResponseDTO> {
-        return rulesService.formatSnippet(snippet, jwt.tokenValue, jwt.subject)
+        return rulesService.formatSnippet(snippet.snippet, jwt.tokenValue, jwt.subject)
     }
 }
