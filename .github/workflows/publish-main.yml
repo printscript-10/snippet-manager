@@ -30,6 +30,9 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}-dev
+          secrets: |
+            USERNAME: ${{ secrets.GHCR_USERNAME }}
+            TOKEN: ${{ secrets.TOKEN }}
           build-args: |
             USERNAME=$USERNAME
             TOKEN=$TOKEN
