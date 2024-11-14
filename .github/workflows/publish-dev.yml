@@ -22,20 +22,14 @@ jobs:
 
       - name: Build and push Docker image
         id: push
-        uses: docker/build-push-action@v4
-        env:
-          USERNAME: ${{ secrets.GHCR_USERNAME }}
-          TOKEN: ${{ secrets.TOKEN }}
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}-dev
-          secrets: |
-            USERNAME: ${{ secrets.GHCR_USERNAME }}
-            TOKEN: ${{ secrets.TOKEN }}
           build-args: |
-            USERNAME=$USERNAME
-            TOKEN=$TOKEN
+            USERNAME=${{ secrets.GHCR_USERNAME }}
+            TOKEN=${{ secrets.TOKEN }}
 
   pull-and-run-image:
     needs: build-and-push-image
