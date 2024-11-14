@@ -27,3 +27,7 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO rule (id, created_at, updated_at, name, type, value_type)
 VALUES ('59149a42-2812-4244-ad8b-1df5daff7db0', '2024-09-11 01:01:01.000001', '2024-09-11 01:01:01.000001', 'println_trailing_line_jump', 'FORMAT', 'INTEGER')
 ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO rule (id, created_at, updated_at, name, type, value_type)
+VALUES ('59149a42-2812-4244-ad8b-1df5daff7dc1', '2024-09-11 01:01:01.000001', '2024-09-11 01:01:01.000001', 'if_block_indent_spaces', 'FORMAT', 'INTEGER')
+ON CONFLICT (id) DO NOTHING;

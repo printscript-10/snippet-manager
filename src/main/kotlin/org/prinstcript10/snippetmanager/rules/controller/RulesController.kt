@@ -1,11 +1,13 @@
 package org.prinstcript10.snippetmanager.rules.controller
 
 import jakarta.validation.Valid
+import org.prinstcript10.snippetmanager.integration.runner.dto.FormatSnippetResponseDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.AddUserRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.GetRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.enum.RuleType
 import org.prinstcript10.snippetmanager.rules.service.RulesService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.validation.annotation.Validated
@@ -39,5 +41,13 @@ class RulesController(
         @AuthenticationPrincipal jwt: Jwt,
     ): List<GetRuleDTO> {
         return rulesService.getRules(ruleType, jwt.subject)
+    }
+
+    @PostMapping("format")
+    fun formatSnippet(
+        @Valid @RequestBody snippet: String,
+        @AuthenticationPrincipal jwt: Jwt,
+    ): ResponseEntity<FormatSnippetResponseDTO> {
+        return rulesService.formatSnippet(snippet, jwt.tokenValue, jwt.subject)
     }
 }

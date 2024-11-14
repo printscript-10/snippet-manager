@@ -1,5 +1,8 @@
 package org.prinstcript10.snippetmanager.integration.runner
 
+import org.prinstcript10.snippetmanager.integration.runner.dto.FormatSnippetDTO
+import org.prinstcript10.snippetmanager.integration.runner.dto.FormatSnippetResponseDTO
+import org.prinstcript10.snippetmanager.integration.runner.dto.FormatterConfig
 import org.prinstcript10.snippetmanager.integration.runner.dto.RunSnippetDTO
 import org.prinstcript10.snippetmanager.integration.runner.dto.RunSnippetResponseDTO
 import org.prinstcript10.snippetmanager.integration.runner.dto.ValidateSnippetDTO
@@ -56,6 +59,25 @@ class PrintscriptRunnerService
         private fun getHeaders(token: String): HttpHeaders {
             return HttpHeaders().apply {
                 set("Authorization", "Bearer $token")
+            }
+        }
+
+        override fun formatSnippet(
+            snippet: String,
+            config: FormatterConfig,
+            token: String,
+        ): ResponseEntity<FormatSnippetResponseDTO> {
+            try {
+                val formatSnippetDTO = FormatSnippetDTO(snippet, config)
+                val request = HttpEntity(formatSnippetDTO, getHeaders(token))
+                return rest.exchange(
+                    "$runnerUrl/format",
+                    HttpMethod.POST,
+                    request,
+                    FormatSnippetResponseDTO::class.java,
+                )
+            } catch (e: HttpClientErrorException) {
+                throw e
             }
         }
     }
