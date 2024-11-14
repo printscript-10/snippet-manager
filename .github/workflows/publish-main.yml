@@ -51,8 +51,8 @@ jobs:
           envs: USERNAME, TOKEN
           script: |
             cd infra
-            sudo docker login --username printscript-10 --password $TOKEN ghcr.io
-            sudo docker-compose -f docker-compose.dev.yml stop ${{ github.repository }}-main
+            sudo docker login --username $USERNAME --password $TOKEN ghcr.io
+            sudo docker-compose -f docker-compose.prod.yml stop ${{ github.repository }}
             sudo docker system prune --force
-            sudo docker-compose -f docker-compose.dev.yml pull ${{ github.repository }}-main
-            sudo docker-compose -f docker-compose.dev.yml up -d ${{ github.repository }}-main
+            sudo docker-compose -f docker-compose.prod.yml pull ${{ github.repository }}
+            sudo docker-compose -f docker-compose.prod.yml up -d ${{ github.repository }}
