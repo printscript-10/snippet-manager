@@ -16,6 +16,7 @@ class LintRequestProducer
     ) : RedisStreamProducer(streamName, redis) {
 
         suspend fun publishEvent(event: String) {
+            println("Publishing lint request: $event")
             emit(event)
         }
     }
