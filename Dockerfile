@@ -5,6 +5,9 @@ WORKDIR /home/gradle/src
 RUN gradle assemble
 FROM eclipse-temurin:21-jre
 
+ARG USERNAME=$USERNAME
+ARG TOKEN=$TOKEN
+
 EXPOSE 8081
 
 RUN mkdir /app

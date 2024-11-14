@@ -23,6 +23,9 @@ data class TestCase(
     @Column(name = "output")
     val output: List<String> = listOf(),
 
+//    @Enumerated(EnumType.STRING)
+//    var status: TestStatus = TestStatus.PENDING,
+
     @ManyToOne
     @JoinColumn(name = "snippetId", referencedColumnName = "id", nullable = false)
     val snippet: Snippet? = null,

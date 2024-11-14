@@ -25,7 +25,7 @@ class RulesController(
 ) {
 
     @PostMapping("/{ruleType}")
-    fun addRules(
+    suspend fun addRules(
         @Valid @RequestBody rules: List<AddUserRuleDTO>,
         @PathVariable ruleType: RuleType,
         @AuthenticationPrincipal jwt: Jwt,

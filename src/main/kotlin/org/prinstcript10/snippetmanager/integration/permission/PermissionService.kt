@@ -51,6 +51,20 @@ class PermissionService
             }
         }
 
+        fun getSnippetOwner(snippetId: String, token: String): ResponseEntity<SnippetPermissionDTO> {
+            return try {
+                val request = HttpEntity(null, getHeaders(token))
+                rest.exchange(
+                    "$permissionUrl/owner/$snippetId",
+                    HttpMethod.GET,
+                    request,
+                    SnippetPermissionDTO::class.java,
+                )
+            } catch (e: HttpClientErrorException) {
+                throw e
+            }
+        }
+
         fun getAllSnippetPermissions(token: String): ResponseEntity<List<SnippetPermissionDTO>> {
             return try {
                 val request = HttpEntity(null, getHeaders(token))

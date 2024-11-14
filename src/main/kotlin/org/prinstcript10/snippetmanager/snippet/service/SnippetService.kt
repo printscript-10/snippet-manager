@@ -2,8 +2,12 @@ package org.prinstcript10.snippetmanager.snippet.service
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import jakarta.transaction.Transactional
 import org.prinstcript10.snippetmanager.integration.asset.AssetService
+import org.prinstcript10.snippetmanager.integration.auth0.Auth0Service
+import org.prinstcript10.snippetmanager.integration.auth0.dto.PaginatedUsersDTO
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
+import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
@@ -16,8 +20,11 @@ import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetsDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
+import org.prinstcript10.snippetmanager.snippet.model.entity.UserSnippetLinting
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
+import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLintingStatus
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
+import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetLintingRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -27,12 +34,15 @@ class SnippetService
     constructor(
         private val assetService: AssetService,
         private val snippetRepository: SnippetRepository,
+        private val userSnippetLintingRepository: UserSnippetLintingRepository,
         private val runnerServices: Map<SnippetLanguage, RunnerService>,
         private val permissionService: PermissionService,
+        private val auth0Service: Auth0Service,
     ) {
 
-        fun createSnippet(
+        suspend fun createSnippet(
             createSnippetDTO: CreateSnippetDTO,
+            userId: String,
             token: String,
         ): SnippetDTO {
             // VALIDATE SNIPPET
@@ -64,6 +74,8 @@ class SnippetService
                 snippetRepository.delete(snippet)
                 throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
             }
+
+            createUserPendingSnippet(userId, snippet)
 
             return SnippetDTO(
                 id = snippet.id,
@@ -100,7 +112,13 @@ class SnippetService
             }
         }
 
-        fun getAllSnippets(token: String, page: Int, pageSize: Int, param: String): PaginatedSnippetsDTO {
+        fun getAllSnippets(
+            token: String,
+            page: Int,
+            pageSize: Int,
+            param: String,
+            userId: String,
+        ): PaginatedSnippetsDTO {
             val offset = page * pageSize
             val response = permissionService.getAllSnippetPermissions(token)
 
@@ -111,15 +129,35 @@ class SnippetService
 
             val snippets = snippetRepository.findAll(snippetIds, pageSize, offset, param)
 
+            val nickname: String = auth0Service.getUserById(userId).body!!.nickname
+
             return PaginatedSnippetsDTO(
                 snippets = snippets.map {
+                    val status: String =
+                        userSnippetLintingRepository.findFirstBySnippetIdAndUserId(it.id!!, userId)?.status?.name
+                            ?: SnippetLintingStatus.PENDING.name
+
+                    val author: String =
+                        if (
+                            snippetPermissions.find {
+                                    permission ->
+                                permission.snippetId == it.id
+                            }!!.ownership == SnippetOwnership.OWNER
+                        ) {
+                            nickname
+                        } else {
+                            auth0Service.getUserById(
+                                permissionService.getSnippetOwner(it.id, token).body!!.userId,
+                            ).body?.nickname!!
+                        }
+
                     PaginatedSnippetDTO(
-                        id = it.id!!,
+                        id = it.id,
                         name = it.name,
                         language = it.language.name,
                         extension = it.language.getExtension(),
-                        compliance = "compliant",
-                        author = "nipe",
+                        compliance = status,
+                        author = author,
                     )
                 },
             )
@@ -160,11 +198,50 @@ class SnippetService
             snippetRepository.delete(existingSnippet)
         }
 
-        fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String) {
-            snippetRepository.findById(shareSnippetDTO.snippetId)
+        suspend fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String) {
+            val snippet = snippetRepository.findById(shareSnippetDTO.snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID ${shareSnippetDTO.snippetId} not found") }
 
             permissionService.shareSnippet(shareSnippetDTO, token)
+
+            createUserPendingSnippet(shareSnippetDTO.userId, snippet)
+        }
+
+        fun getSnippetFriends(page: Int, pageSize: Int, param: String, userId: String): PaginatedUsersDTO {
+            val users = auth0Service.getUsers(page, pageSize, param).body!!.filter { it.user_id != userId }
+            return PaginatedUsersDTO(
+                users = users,
+                total = users.size,
+            )
+        }
+
+        fun resetUserSnippetLinting(userId: String): List<String> {
+            val snippets = userSnippetLintingRepository.findAllByUserId(userId)
+            snippets.forEach {
+                it.status = SnippetLintingStatus.PENDING
+            }
+
+            userSnippetLintingRepository.saveAll(snippets)
+
+            return snippets.map { it.snippet!!.id!! }
+        }
+
+        @Transactional
+        fun updateUserSnippetLintingStatus(snippetId: String, userId: String, status: SnippetLintingStatus) {
+            userSnippetLintingRepository.findFirstBySnippetIdAndUserId(snippetId, userId)?.let {
+                it.status = status
+                userSnippetLintingRepository.save(it)
+            }
+        }
+
+        private fun createUserPendingSnippet(userId: String, snippet: Snippet) {
+            userSnippetLintingRepository.save(
+                UserSnippetLinting(
+                    userId = userId,
+                    snippet = snippet,
+                    status = SnippetLintingStatus.PENDING,
+                ),
+            )
         }
 
         private fun extractMessage(jsonString: String, field: String): String {

@@ -1,6 +1,10 @@
 package org.prinstcript10.snippetmanager.redis.consumer
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.austral.ingsis.redis.RedisStreamConsumer
+import org.prinstcript10.snippetmanager.redis.event.LintResponseEvent
+import org.prinstcript10.snippetmanager.snippet.service.SnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -16,11 +20,20 @@ class LintResponseConsumer
         private val streamName: String,
         @Value("\${linteando_ando}")
         private val groupName: String,
+        private val objectMapper: ObjectMapper,
+        private val snippetService: SnippetService,
         redis: RedisTemplate<String, String>,
     ) : RedisStreamConsumer<String>(streamName, groupName, redis) {
 
         override fun onMessage(record: ObjectRecord<String, String>) {
-            TODO("Not yet implemented")
+            val lintResponse: LintResponseEvent = objectMapper.readValue(record.value)
+
+            println("Received lint response: $lintResponse")
+            snippetService.updateUserSnippetLintingStatus(
+                lintResponse.snippetId,
+                lintResponse.userId,
+                lintResponse.status,
+            )
         }
 
         override fun options(): StreamReceiver.StreamReceiverOptions<String, ObjectRecord<String, String>> {
