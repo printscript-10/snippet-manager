@@ -17,7 +17,7 @@ jobs:
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
           registry: ghcr.io
-          username: printscript-10
+          username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.TOKEN }}
 
       - name: Build and push Docker image
@@ -27,6 +27,9 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}-dev
+          build-args: |
+            USERNAME=${{ secrets.GHCR_USERNAME }}
+            TOKEN=${{ secrets.TOKEN }}
 
   pull-and-run-image:
     needs: build-and-push-image
@@ -39,15 +42,16 @@ jobs:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         env:
+          USERNAME: ${{ secrets.GHCR_USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
         with:
           host: ${{ secrets.DEV_EC2_HOST_DNS }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs: TOKEN
+          envs: USERNAME, TOKEN
           script: |
             cd infra
-            sudo docker login --username printscript-10 --password $TOKEN ghcr.io
+            sudo docker login --username $USERNAME --password $TOKEN ghcr.io
             sudo docker-compose -f docker-compose.dev.yml stop ${{ github.repository }}-dev
             sudo docker system prune --force
             sudo docker-compose -f docker-compose.dev.yml pull ${{ github.repository }}-dev
