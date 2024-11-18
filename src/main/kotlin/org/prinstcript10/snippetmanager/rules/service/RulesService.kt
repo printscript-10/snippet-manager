@@ -5,9 +5,11 @@ import jakarta.transaction.Transactional
 import org.prinstcript10.snippetmanager.integration.runner.PrintscriptRunnerService
 import org.prinstcript10.snippetmanager.integration.runner.dto.FormatSnippetResponseDTO
 import org.prinstcript10.snippetmanager.integration.runner.dto.FormatterConfig
-import org.prinstcript10.snippetmanager.redis.event.LintConfig
-import org.prinstcript10.snippetmanager.redis.event.LintRequestEvent
-import org.prinstcript10.snippetmanager.redis.producer.LintRequestProducer
+import org.prinstcript10.snippetmanager.redis.format.event.FormatRequestEvent
+import org.prinstcript10.snippetmanager.redis.format.producer.FormatRequestProducer
+import org.prinstcript10.snippetmanager.redis.lint.event.LintConfig
+import org.prinstcript10.snippetmanager.redis.lint.event.LintRequestEvent
+import org.prinstcript10.snippetmanager.redis.lint.producer.LintRequestProducer
 import org.prinstcript10.snippetmanager.rules.model.dto.AddUserRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.dto.GetRuleDTO
 import org.prinstcript10.snippetmanager.rules.model.entity.UserRule
@@ -29,6 +31,7 @@ class RulesService
         private val lintRequestProducer: LintRequestProducer,
         private val objectMapper: ObjectMapper,
         private val runnerService: PrintscriptRunnerService,
+        private val formatRequestProducer: FormatRequestProducer,
     ) {
 
         fun getRules(ruleType: RuleType, userId: String): List<GetRuleDTO> {
@@ -59,36 +62,31 @@ class RulesService
             if (ruleType == RuleType.LINT) {
                 val snippetIds: List<String> = snippetService.resetUserSnippetLinting(userId)
                 publishLintEvents(userId, snippetIds)
+            } else if (ruleType == RuleType.FORMAT) {
+                val snippetIds: List<String> = snippetService.resetUserSnippetFormatting(userId)
+                publishFormatEvents(userId, snippetIds)
             }
         }
 
         fun formatSnippet(snippet: String, token: String, userId: String): ResponseEntity<FormatSnippetResponseDTO> {
-            val formatRules: List<UserRule> = userRuleRepository.findAllByUserIdAndRuleType(userId, RuleType.FORMAT)
-            val formatConfig = FormatterConfig(null, null, null, null, null)
+            val config = parseFormatRules(userId)
 
-            formatRules.forEach {
-                if (it.isActive) {
-                    when (it.rule!!.name) {
-                        "declaration_colon_trailing_whitespaces" ->
-                            formatConfig.declaration_colon_trailing_whitespaces =
-                                it.value.toBoolean()
-                        "declaration_colon_leading_whitespaces" ->
-                            formatConfig.declaration_colon_leading_whitespaces =
-                                it.value.toBoolean()
-                        "assignation_equal_wrap_whitespaces" ->
-                            formatConfig.assignation_equal_wrap_whitespaces =
-                                it.value.toBoolean()
-                        "println_trailing_line_jump" ->
-                            formatConfig.println_trailing_line_jump =
-                                it.value.toInt()
-                        "if_block_indent_spaces" ->
-                            formatConfig.if_block_indent_spaces =
-                                it.value.toInt()
-                    }
-                }
+            return runnerService.formatSnippet(snippet, config, token)
+        }
+
+        suspend fun publishFormatEvents(userId: String, snippetIds: List<String>) {
+            val config = parseFormatRules(userId)
+            snippetIds.forEach {
+                formatRequestProducer.publishEvent(
+                    objectMapper.writeValueAsString(
+                        FormatRequestEvent(
+                            userId = userId,
+                            snippetId = it,
+                            config = config,
+                        ),
+                    ),
+                )
             }
-
-            return runnerService.formatSnippet(snippet, formatConfig, token)
         }
 
         suspend fun publishLintEvents(userId: String, snippetIds: List<String>) {
@@ -119,5 +117,34 @@ class RulesService
                 }
             }
             return config
+        }
+
+        fun parseFormatRules(userId: String): FormatterConfig {
+            val formatRules: List<UserRule> = userRuleRepository.findAllByUserIdAndRuleType(userId, RuleType.FORMAT)
+            val formatConfig = FormatterConfig(null, null, null, null, null)
+
+            formatRules.forEach {
+                if (it.isActive) {
+                    when (it.rule!!.name) {
+                        "declaration_colon_trailing_whitespaces" ->
+                            formatConfig.declaration_colon_trailing_whitespaces =
+                                it.value.toBoolean()
+                        "declaration_colon_leading_whitespaces" ->
+                            formatConfig.declaration_colon_leading_whitespaces =
+                                it.value.toBoolean()
+                        "assignation_equal_wrap_whitespaces" ->
+                            formatConfig.assignation_equal_wrap_whitespaces =
+                                it.value.toBoolean()
+                        "println_trailing_line_jump" ->
+                            formatConfig.println_trailing_line_jump =
+                                it.value.toInt()
+                        "if_block_indent_spaces" ->
+                            formatConfig.if_block_indent_spaces =
+                                it.value.toInt()
+                    }
+                }
+            }
+
+            return formatConfig
         }
     }

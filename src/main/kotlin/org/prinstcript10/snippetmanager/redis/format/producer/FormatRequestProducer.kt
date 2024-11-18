@@ -1,4 +1,4 @@
-package org.prinstcript10.snippetmanager.redis.producer
+package org.prinstcript10.snippetmanager.redis.format.producer
 
 import org.austral.ingsis.redis.RedisStreamProducer
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,16 +7,16 @@ import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class LintRequestProducer
+class FormatRequestProducer
     @Autowired
     constructor(
-        @Value("\${lint_request}")
+        @Value("\${format_request}")
         private val streamName: String,
         redis: RedisTemplate<String, String>,
     ) : RedisStreamProducer(streamName, redis) {
 
         suspend fun publishEvent(event: String) {
-            println("Publishing lint request: $event")
+            println("Publishing format request: $event")
             emit(event)
         }
     }

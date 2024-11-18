@@ -1,4 +1,4 @@
-package org.prinstcript10.snippetmanager.redis.event
+package org.prinstcript10.snippetmanager.redis.lint.event
 
 data class LintConfig(
     var allow_expression_in_println: Boolean?,

@@ -18,4 +18,10 @@ data class Snippet(
 
     @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "snippet")
     val testCases: List<TestCase> = listOf(),
+
+    @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "snippet")
+    val userSnippetLinting: List<UserSnippetLinting> = listOf(),
+
+    @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "snippet")
+    val userSnippetFormatting: List<UserSnippetFormatting> = listOf(),
 ) : BaseModel()

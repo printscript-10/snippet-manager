@@ -8,17 +8,17 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
 import org.prinstcript10.snippetmanager.shared.baseModel.BaseModel
-import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLintingStatus
+import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetFormatStatus
 
 @Entity
 @Table(uniqueConstraints = [UniqueConstraint(columnNames = ["userId", "snippetId"])])
-data class UserSnippetLinting(
+data class UserSnippetFormatting(
     val userId: String = "",
 
     @Enumerated(EnumType.STRING)
-    var status: SnippetLintingStatus = SnippetLintingStatus.PENDING,
+    var status: SnippetFormatStatus = SnippetFormatStatus.PENDING,
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "snippetId", nullable = false)
     val snippet: Snippet? = null,
 ) : BaseModel()

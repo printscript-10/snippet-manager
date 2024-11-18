@@ -20,10 +20,13 @@ import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetsDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
+import org.prinstcript10.snippetmanager.snippet.model.entity.UserSnippetFormatting
 import org.prinstcript10.snippetmanager.snippet.model.entity.UserSnippetLinting
+import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetFormatStatus
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLintingStatus
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
+import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetFormattingRepository
 import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetLintingRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -35,6 +38,7 @@ class SnippetService
         private val assetService: AssetService,
         private val snippetRepository: SnippetRepository,
         private val userSnippetLintingRepository: UserSnippetLintingRepository,
+        private val userSnippetFormattingRepository: UserSnippetFormattingRepository,
         private val runnerServices: Map<SnippetLanguage, RunnerService>,
         private val permissionService: PermissionService,
         private val auth0Service: Auth0Service,
@@ -75,7 +79,8 @@ class SnippetService
                 throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
             }
 
-            createUserPendingSnippet(userId, snippet)
+            createUserPendingSnippetLint(userId, snippet)
+            createUserPendingSnippetFormat(userId, snippet)
 
             return SnippetDTO(
                 id = snippet.id,
@@ -204,7 +209,7 @@ class SnippetService
 
             permissionService.shareSnippet(shareSnippetDTO, token)
 
-            createUserPendingSnippet(shareSnippetDTO.userId, snippet)
+            createUserPendingSnippetLint(shareSnippetDTO.userId, snippet)
         }
 
         fun getSnippetFriends(page: Int, pageSize: Int, param: String, userId: String): PaginatedUsersDTO {
@@ -226,6 +231,16 @@ class SnippetService
             return snippets.map { it.snippet!!.id!! }
         }
 
+        fun resetUserSnippetFormatting(userId: String): List<String> {
+            val snippets = userSnippetFormattingRepository.findAllByUserId(userId)
+            snippets.forEach {
+                it.status = SnippetFormatStatus.PENDING
+            }
+            userSnippetFormattingRepository.saveAll(snippets)
+
+            return snippets.map { it.snippet!!.id!! }
+        }
+
         @Transactional
         fun updateUserSnippetLintingStatus(snippetId: String, userId: String, status: SnippetLintingStatus) {
             userSnippetLintingRepository.findFirstBySnippetIdAndUserId(snippetId, userId)?.let {
@@ -234,7 +249,25 @@ class SnippetService
             }
         }
 
-        private fun createUserPendingSnippet(userId: String, snippet: Snippet) {
+        @Transactional
+        fun updateUserSnippetFormatStatus(snippetId: String, userId: String, status: SnippetFormatStatus) {
+            userSnippetFormattingRepository.findFirstBySnippetIdAndUserId(snippetId, userId)?.let {
+                it.status = status
+                userSnippetFormattingRepository.save(it)
+            }
+        }
+
+        private fun createUserPendingSnippetFormat(userId: String, snippet: Snippet) {
+            userSnippetFormattingRepository.save(
+                UserSnippetFormatting(
+                    userId = userId,
+                    snippet = snippet,
+                    status = SnippetFormatStatus.PENDING,
+                ),
+            )
+        }
+
+        private fun createUserPendingSnippetLint(userId: String, snippet: Snippet) {
             userSnippetLintingRepository.save(
                 UserSnippetLinting(
                     userId = userId,
