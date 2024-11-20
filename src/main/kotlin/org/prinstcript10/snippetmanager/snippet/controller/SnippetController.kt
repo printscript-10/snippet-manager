@@ -9,6 +9,7 @@ import org.prinstcript10.snippetmanager.snippet.model.dto.PaginatedSnippetsDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.ShareSnippetDTO
 import org.prinstcript10.snippetmanager.snippet.model.dto.SnippetDTO
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
@@ -30,6 +31,7 @@ class SnippetController(
     @Autowired
     private val snippetService: SnippetService,
 ) {
+    private val logger = LoggerFactory.getLogger(SnippetService::class.java)
 
     @GetMapping("friends")
     fun getSnippetFriends(
@@ -95,5 +97,10 @@ class SnippetController(
         @AuthenticationPrincipal jwt: Jwt,
     ) {
         return snippetService.shareSnippet(shareSnippetDTO, jwt.tokenValue)
+    }
+
+    @GetMapping("elexplotes")
+    fun explode() {
+        logger.error("El explotes exploto")
     }
 }
