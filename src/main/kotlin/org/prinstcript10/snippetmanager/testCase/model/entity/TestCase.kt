@@ -1,11 +1,13 @@
 package org.prinstcript10.snippetmanager.testCase.model.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import org.prinstcript10.snippetmanager.shared.baseModel.BaseModel
 import org.prinstcript10.snippetmanager.snippet.model.entity.Snippet
 
@@ -23,10 +25,10 @@ data class TestCase(
     @Column(name = "output")
     val output: List<String> = listOf(),
 
-//    @Enumerated(EnumType.STRING)
-//    var status: TestStatus = TestStatus.PENDING,
-
     @ManyToOne
     @JoinColumn(name = "snippetId", referencedColumnName = "id", nullable = false)
     val snippet: Snippet? = null,
+
+    @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "testCase")
+    val snippetTesting: List<SnippetTesting> = listOf(),
 ) : BaseModel()

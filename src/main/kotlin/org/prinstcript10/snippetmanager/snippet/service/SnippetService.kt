@@ -28,6 +28,7 @@ import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLintingStatus
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
 import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetFormattingRepository
 import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetLintingRepository
+import org.prinstcript10.snippetmanager.testCase.service.TestCaseService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -42,6 +43,8 @@ class SnippetService
         private val runnerServices: Map<SnippetLanguage, RunnerService>,
         private val permissionService: PermissionService,
         private val auth0Service: Auth0Service,
+        private val testCaseService: TestCaseService,
+
     ) {
 
         suspend fun createSnippet(
@@ -168,7 +171,8 @@ class SnippetService
             )
         }
 
-        fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {
+        @Transactional
+        suspend fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -188,6 +192,9 @@ class SnippetService
                 editSnippetDTO.snippet,
                 token,
             )
+
+            val tests: List<String> = testCaseService.resetSnippetTesting(snippetId)
+            testCaseService.publishSnippetTestingEvents(tests)
 
             assetService.saveSnippet(snippetId, editSnippetDTO.snippet)
         }
@@ -210,6 +217,7 @@ class SnippetService
             permissionService.shareSnippet(shareSnippetDTO, token)
 
             createUserPendingSnippetLint(shareSnippetDTO.userId, snippet)
+            createUserPendingSnippetFormat(shareSnippetDTO.userId, snippet)
         }
 
         fun getSnippetFriends(page: Int, pageSize: Int, param: String, userId: String): PaginatedUsersDTO {

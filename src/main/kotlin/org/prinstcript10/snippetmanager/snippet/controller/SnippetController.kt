@@ -73,7 +73,7 @@ class SnippetController(
     }
 
     @PutMapping("{snippetId}")
-    fun updateSnippet(
+    suspend fun updateSnippet(
         @PathVariable("snippetId") snippetId: String,
         @Valid @RequestBody editSnippetDTO: EditSnippetDTO,
         @AuthenticationPrincipal jwt: Jwt,

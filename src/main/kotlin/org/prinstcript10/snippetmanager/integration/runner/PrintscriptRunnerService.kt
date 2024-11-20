@@ -43,10 +43,10 @@ class PrintscriptRunnerService
             token: String,
         ): ResponseEntity<RunSnippetResponseDTO> {
             try {
-                val runSnippetDTO = RunSnippetDTO(inputs)
+                val runSnippetDTO = RunSnippetDTO(snippetId, inputs)
                 val request = HttpEntity(runSnippetDTO, getHeaders(token))
                 return rest.exchange(
-                    "$runnerUrl/run/$snippetId",
+                    "$runnerUrl/run",
                     HttpMethod.POST,
                     request,
                     RunSnippetResponseDTO::class.java,

@@ -1,20 +1,26 @@
 package org.prinstcript10.snippetmanager.testCase.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.transaction.Transactional
+import org.hibernate.Hibernate
 import org.prinstcript10.snippetmanager.integration.permission.PermissionService
-import org.prinstcript10.snippetmanager.integration.permission.SnippetOwnership
-import org.prinstcript10.snippetmanager.integration.permission.dto.SnippetPermissionDTO
 import org.prinstcript10.snippetmanager.integration.runner.RunnerService
+import org.prinstcript10.snippetmanager.redis.testCase.event.TestCaseRequestEvent
+import org.prinstcript10.snippetmanager.redis.testCase.producer.TestCaseRequestProducer
 import org.prinstcript10.snippetmanager.shared.exception.BadRequestException
 import org.prinstcript10.snippetmanager.shared.exception.ConflictException
 import org.prinstcript10.snippetmanager.shared.exception.NotFoundException
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetLanguage
 import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
+import org.prinstcript10.snippetmanager.snippet.repository.SnippetTestingRepository
 import org.prinstcript10.snippetmanager.snippet.repository.TestCaseRepository
 import org.prinstcript10.snippetmanager.testCase.model.dto.CreateTestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.RunTestCaseResponseDTO
 import org.prinstcript10.snippetmanager.testCase.model.dto.TestCaseDTO
+import org.prinstcript10.snippetmanager.testCase.model.entity.SnippetTesting
 import org.prinstcript10.snippetmanager.testCase.model.entity.TestCase
+import org.prinstcript10.snippetmanager.testCase.model.enum.TestStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -25,18 +31,22 @@ class TestCaseService(
     private val permissionService: PermissionService,
     private val runnerServices: Map<SnippetLanguage, RunnerService>,
     private val snippetRepository: SnippetRepository,
+    private val objectMapper: ObjectMapper,
+    private val snippetTestingRepository: SnippetTestingRepository,
+    private val testCaseRequestProducer: TestCaseRequestProducer,
+
 ) {
 
     fun addTestCase(createTestCaseDTO: CreateTestCaseDTO, snippetId: String, token: String) {
-        val permission = permissionService.getPermission(snippetId, token)
+        permissionService.getPermission(snippetId, token)
 
-        val ownership = (permission.body as SnippetPermissionDTO).ownership
-
-        if (ownership != SnippetOwnership.OWNER) {
-            throw BadRequestException(
-                "User is not the snippet owner",
-            )
-        }
+//        val ownership = (permission.body as SnippetPermissionDTO).ownership
+//
+//        if (ownership != SnippetOwnership.OWNER) {
+//            throw BadRequestException(
+//                "User is not the snippet owner",
+//            )
+//        }
 
         val snippet = snippetRepository.findById(snippetId)
             .orElseThrow { throw NotFoundException("Snippet not found with id: $snippetId") }
@@ -48,7 +58,9 @@ class TestCaseService(
             snippet = snippet,
         )
 
-        testCaseRepository.save(testCase)
+        val savedTestCase = testCaseRepository.save(testCase)
+
+        createPendingSnippetTest(savedTestCase)
     }
 
     fun runTestCaseById(testId: String, token: String): RunTestCaseResponseDTO {
@@ -103,16 +115,28 @@ class TestCaseService(
         return response
     }
 
+    @Transactional
+    fun getTestCaseById(id: String): TestCase {
+        val testCase = testCaseRepository.findById(id)
+            .orElseThrow { NotFoundException("TestCase with ID $id not found") }
+
+        Hibernate.initialize(testCase.output)
+        return testCase
+    }
+
     fun getSnippetTests(snippetId: String, token: String): List<TestCaseDTO> {
         snippetRepository.findById(snippetId)
             .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
         return testCaseRepository.findBySnippetId(snippetId).map { testCase ->
+            val currentStatus = testCase.snippetTesting.firstOrNull()?.status ?: TestStatus.PENDING
+
             TestCaseDTO(
                 id = testCase.id!!,
                 name = testCase.name,
                 input = testCase.input,
                 output = testCase.output,
+                status = currentStatus,
             )
         }
     }
@@ -127,5 +151,49 @@ class TestCaseService(
         permissionService.getPermission(snippetId, token)
 
         testCaseRepository.deleteById(testId)
+    }
+
+    fun resetSnippetTesting(snippetId: String): List<String> {
+        val tests = snippetTestingRepository.findAllBySnippetId(snippetId)
+        tests.forEach {
+            it.status = TestStatus.PENDING
+        }
+
+        snippetTestingRepository.saveAll(tests)
+
+        return tests.map { it.testCase!!.id!! }
+    }
+
+    private fun createPendingSnippetTest(testCase: TestCase) {
+        snippetTestingRepository.save(
+            SnippetTesting(
+                testCase = testCase,
+                status = TestStatus.PENDING,
+            ),
+        )
+    }
+
+    suspend fun publishSnippetTestingEvents(testIds: List<String>) {
+        val tests = testCaseRepository.findAllById(testIds)
+        if (tests.isEmpty()) { return }
+        tests.forEach {
+            testCaseRequestProducer.publishEvent(
+                objectMapper.writeValueAsString(
+                    TestCaseRequestEvent(
+                        testCaseId = it.id!!,
+                        snippetId = it.snippet!!.id!!,
+                        inputs = it.input,
+                    ),
+                ),
+            )
+        }
+    }
+
+    @Transactional
+    fun updateSnippetTestCaseStatus(testId: String, status: TestStatus) {
+        snippetTestingRepository.findFirstByTestCaseId(testId)?.let {
+            it.status = status
+            snippetTestingRepository.save(it)
+        }
     }
 }

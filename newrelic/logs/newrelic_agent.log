@@ -943,3 +943,499 @@
 2024-11-18T14:29:25,877-0300 [27220 97] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
 2024-11-18T14:29:25,899-0300 [27220 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@55a76444 tried to finish but ServiceManager not started
 2024-11-18T14:29:26,221-0300 [27220 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-19T11:43:12,251-0300 [22592 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-19T11:43:12,717-0300 [22592 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-19T11:43:13,704-0300 [22592 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-19T11:43:13,918-0300 [22592 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-19T11:43:14,064-0300 [22592 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-19T11:43:14,068-0300 [22592 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-19T11:43:14,068-0300 [22592 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-19T11:43:14,068-0300 [22592 1] com.newrelic INFO: Premain startup complete in 2.633ms
+2024-11-19T11:43:14,070-0300 [22592 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-19T11:43:17,472-0300 [22592 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-19T11:43:24,071-0300 [22592 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-19T11:43:24,072-0300 [22592 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T11:43:24,900-0300 [22592 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-19T11:43:25,554-0300 [22592 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-19T11:43:25,554-0300 [22592 57] com.newrelic INFO: Agent run id: BTqQx5vA9xyUAF4tVEvx4-lnPKRsAAIBAAAnIQEAAFhAAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-19T11:43:25,554-0300 [22592 57] com.newrelic INFO: Agent 22592@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-19T11:43:25,554-0300 [22592 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-19T11:43:25,555-0300 [22592 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T11:43:25,556-0300 [22592 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T11:43:25,556-0300 [22592 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T11:43:25,557-0300 [22592 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T11:43:25,558-0300 [22592 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T11:43:25,558-0300 [22592 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T11:43:25,890-0300 [22592 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-19T11:43:25,890-0300 [22592 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T13:07:10,186-0300 [22592 130] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T13:07:10,187-0300 [22592 129] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T14:46:31,384-0300 [22592 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-19T14:46:31,430-0300 [22592 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@657ebc0d tried to finish but ServiceManager not started
+2024-11-19T14:46:32,646-0300 [22592 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-19T14:46:59,654-0300 [3212 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-19T14:47:00,110-0300 [3212 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-19T14:47:00,998-0300 [3212 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-19T14:47:01,154-0300 [3212 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-19T14:47:01,231-0300 [3212 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-19T14:47:01,234-0300 [3212 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-19T14:47:01,234-0300 [3212 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-19T14:47:01,234-0300 [3212 1] com.newrelic INFO: Premain startup complete in 2.309ms
+2024-11-19T14:47:01,235-0300 [3212 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-19T14:47:04,144-0300 [3212 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-19T14:47:11,239-0300 [3212 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-19T14:47:11,239-0300 [3212 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T14:47:11,692-0300 [3212 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-19T14:47:12,156-0300 [3212 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-19T14:47:12,156-0300 [3212 57] com.newrelic INFO: Agent run id: BZIyFJjHDEVVAF4tVEvx4-lnPM-MAAIBAAAnIQEAAAyMAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-19T14:47:12,156-0300 [3212 57] com.newrelic INFO: Agent 3212@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-19T14:47:12,156-0300 [3212 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-19T14:47:12,158-0300 [3212 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:47:12,158-0300 [3212 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:47:12,158-0300 [3212 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:47:12,159-0300 [3212 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:47:12,160-0300 [3212 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:47:12,160-0300 [3212 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:47:13,858-0300 [3212 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-19T14:47:13,858-0300 [3212 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T14:57:10,017-0300 [3212 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-19T14:57:10,048-0300 [3212 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T14:57:10,048-0300 [3212 75] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T14:57:10,068-0300 [3212 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@15a97629 tried to finish but ServiceManager not started
+2024-11-19T14:57:10,405-0300 [3212 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-19T14:57:13,776-0300 [3772 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-19T14:57:14,113-0300 [3772 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-19T14:57:14,686-0300 [3772 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-19T14:57:14,826-0300 [3772 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-19T14:57:14,902-0300 [3772 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-19T14:57:14,905-0300 [3772 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-19T14:57:14,905-0300 [3772 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-19T14:57:14,905-0300 [3772 1] com.newrelic INFO: Premain startup complete in 1.671ms
+2024-11-19T14:57:14,906-0300 [3772 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-19T14:57:17,622-0300 [3772 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-19T14:57:24,930-0300 [3772 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-19T14:57:24,931-0300 [3772 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T14:57:25,509-0300 [3772 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-19T14:57:26,016-0300 [3772 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-19T14:57:26,016-0300 [3772 57] com.newrelic INFO: Agent run id: BVEKOIm98u0lAF4tVEvx4-lnPNHkAAIBAAAnIQEAAA68AgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-19T14:57:26,016-0300 [3772 57] com.newrelic INFO: Agent 3772@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-19T14:57:26,016-0300 [3772 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-19T14:57:26,018-0300 [3772 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:57:26,018-0300 [3772 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:57:26,018-0300 [3772 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:57:26,019-0300 [3772 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:57:26,019-0300 [3772 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:57:26,019-0300 [3772 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:57:27,693-0300 [3772 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-19T14:57:27,693-0300 [3772 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T14:57:56,570-0300 [3772 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-19T14:57:56,595-0300 [3772 99] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T14:57:56,595-0300 [3772 100] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T14:57:56,609-0300 [3772 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@35b0d03c tried to finish but ServiceManager not started
+2024-11-19T14:57:57,558-0300 [3772 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-19T14:58:00,565-0300 [276 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-19T14:58:00,566-0300 [276 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-19T14:58:00,566-0300 [276 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-19T14:58:00,566-0300 [276 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-19T14:58:00,566-0300 [276 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-19T14:58:00,566-0300 [276 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-19T14:58:00,911-0300 [276 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-19T14:58:01,455-0300 [276 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-19T14:58:01,597-0300 [276 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-19T14:58:01,673-0300 [276 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-19T14:58:01,675-0300 [276 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-19T14:58:01,675-0300 [276 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-19T14:58:01,675-0300 [276 1] com.newrelic INFO: Premain startup complete in 1.688ms
+2024-11-19T14:58:01,676-0300 [276 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-19T14:58:04,432-0300 [276 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-19T14:58:11,699-0300 [276 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-19T14:58:11,699-0300 [276 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T14:58:11,988-0300 [276 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-19T14:58:12,221-0300 [276 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-19T14:58:12,221-0300 [276 57] com.newrelic INFO: Agent run id: BeQX5hP60dn_AF4tVEvx4-lnPNIgAAIBAAAnIQEAAAEUAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-19T14:58:12,221-0300 [276 57] com.newrelic INFO: Agent 276@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-19T14:58:12,221-0300 [276 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-19T14:58:12,222-0300 [276 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:58:12,222-0300 [276 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:58:12,222-0300 [276 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:58:12,224-0300 [276 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-19T14:58:12,224-0300 [276 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-19T14:58:12,224-0300 [276 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-19T14:58:12,929-0300 [276 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-19T14:58:12,930-0300 [276 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-19T17:14:26,990-0300 [276 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-19T17:14:27,012-0300 [276 62] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T17:14:27,014-0300 [276 62] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-19T17:14:27,085-0300 [276 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@6a4f3a35 tried to finish but ServiceManager not started
+2024-11-19T17:14:27,388-0300 [276 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:40:15,042-0300 [33692 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:40:15,043-0300 [33692 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:40:15,043-0300 [33692 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:40:15,043-0300 [33692 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:40:15,043-0300 [33692 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:40:15,043-0300 [33692 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:40:15,444-0300 [33692 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:40:16,175-0300 [33692 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:40:16,307-0300 [33692 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:40:16,389-0300 [33692 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:40:16,392-0300 [33692 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:40:16,392-0300 [33692 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:40:16,392-0300 [33692 1] com.newrelic INFO: Premain startup complete in 1.958ms
+2024-11-20T13:40:16,393-0300 [33692 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:40:19,250-0300 [33692 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:40:22,599-0300 [33692 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:40:22,601-0300 [33692 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:42:17,995-0300 [29452 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:42:18,303-0300 [29452 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:42:18,844-0300 [29452 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:42:18,980-0300 [29452 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:42:19,071-0300 [29452 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:42:19,074-0300 [29452 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:42:19,075-0300 [29452 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:42:19,075-0300 [29452 1] com.newrelic INFO: Premain startup complete in 1.632ms
+2024-11-20T13:42:19,076-0300 [29452 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:42:21,892-0300 [29452 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:42:25,507-0300 [29452 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:42:25,509-0300 [29452 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:43:58,242-0300 [22824 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:43:58,537-0300 [22824 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:43:59,118-0300 [22824 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:43:59,245-0300 [22824 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:43:59,322-0300 [22824 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:43:59,325-0300 [22824 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:43:59,325-0300 [22824 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:43:59,325-0300 [22824 1] com.newrelic INFO: Premain startup complete in 1.633ms
+2024-11-20T13:43:59,326-0300 [22824 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:44:02,146-0300 [22824 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:44:09,336-0300 [22824 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:44:09,336-0300 [22824 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:44:10,165-0300 [22824 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:44:10,821-0300 [22824 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:44:10,821-0300 [22824 57] com.newrelic INFO: Agent run id: BULCQAuJLlUOAF4tVEvx4-lnPhJIAAIBAAAnIQEAAFkoAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:44:10,821-0300 [22824 57] com.newrelic INFO: Agent 22824@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:44:10,821-0300 [22824 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:44:10,823-0300 [22824 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:44:10,823-0300 [22824 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:44:10,823-0300 [22824 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:44:10,825-0300 [22824 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:44:10,825-0300 [22824 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:44:10,825-0300 [22824 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:44:11,977-0300 [22824 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:44:11,977-0300 [22824 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:49:28,967-0300 [22824 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:49:29,000-0300 [22824 75] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:49:29,000-0300 [22824 76] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:49:29,001-0300 [22824 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:49:29,029-0300 [22824 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@88b6503 tried to finish but ServiceManager not started
+2024-11-20T13:49:29,784-0300 [22824 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:49:33,339-0300 [27956 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:49:33,340-0300 [27956 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:49:33,340-0300 [27956 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:49:33,340-0300 [27956 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:49:33,340-0300 [27956 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:49:33,340-0300 [27956 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:49:33,693-0300 [27956 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:49:34,344-0300 [27956 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:49:34,498-0300 [27956 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:49:34,577-0300 [27956 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:49:34,579-0300 [27956 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:49:34,579-0300 [27956 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:49:34,580-0300 [27956 1] com.newrelic INFO: Premain startup complete in 1.795ms
+2024-11-20T13:49:34,581-0300 [27956 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:49:37,439-0300 [27956 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:49:44,591-0300 [27956 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:49:44,591-0300 [27956 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:49:45,433-0300 [27956 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:49:46,089-0300 [27956 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:49:46,089-0300 [27956 57] com.newrelic INFO: Agent run id: Bfb0AxSHH91DAF4tVEvx4-lnPhN0AAIBAAAnIQEAAG00AgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:49:46,090-0300 [27956 57] com.newrelic INFO: Agent 27956@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:49:46,090-0300 [27956 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:49:46,091-0300 [27956 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:49:46,091-0300 [27956 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:49:46,091-0300 [27956 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:49:46,093-0300 [27956 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:49:46,093-0300 [27956 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:49:46,093-0300 [27956 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:49:46,749-0300 [27956 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:49:46,749-0300 [27956 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:50:59,189-0300 [27956 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:50:59,207-0300 [27956 97] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:50:59,207-0300 [27956 98] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:50:59,222-0300 [27956 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@43e4930a tried to finish but ServiceManager not started
+2024-11-20T13:50:59,986-0300 [27956 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:51:02,746-0300 [20216 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:51:02,746-0300 [20216 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:51:02,746-0300 [20216 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:51:02,747-0300 [20216 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:51:02,747-0300 [20216 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:51:02,747-0300 [20216 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:51:03,039-0300 [20216 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:51:03,568-0300 [20216 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:51:03,700-0300 [20216 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:51:03,797-0300 [20216 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:51:03,800-0300 [20216 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:51:03,800-0300 [20216 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:51:03,800-0300 [20216 1] com.newrelic INFO: Premain startup complete in 1.597ms
+2024-11-20T13:51:03,801-0300 [20216 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:51:06,610-0300 [20216 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:51:13,816-0300 [20216 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:51:13,817-0300 [20216 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:51:14,661-0300 [20216 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:51:15,310-0300 [20216 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:51:15,310-0300 [20216 57] com.newrelic INFO: Agent run id: Bb8lwfL7bjVzAF4tVEvx4-lnPhPsAAIBAAAnIQEAAE74AgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:51:15,310-0300 [20216 57] com.newrelic INFO: Agent 20216@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:51:15,311-0300 [20216 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:51:15,312-0300 [20216 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:51:15,312-0300 [20216 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:51:15,312-0300 [20216 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:51:15,315-0300 [20216 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:51:15,315-0300 [20216 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:51:15,315-0300 [20216 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:51:15,655-0300 [20216 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:51:15,655-0300 [20216 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:55:27,475-0300 [20216 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:55:27,495-0300 [20216 96] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:55:27,509-0300 [20216 97] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:55:27,526-0300 [20216 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@1d645bfc tried to finish but ServiceManager not started
+2024-11-20T13:55:28,281-0300 [20216 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:55:31,714-0300 [14272 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:55:31,714-0300 [14272 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:55:31,714-0300 [14272 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:55:31,715-0300 [14272 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:55:31,715-0300 [14272 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:55:31,715-0300 [14272 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:55:32,050-0300 [14272 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:55:32,657-0300 [14272 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:55:32,794-0300 [14272 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:55:32,870-0300 [14272 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:55:32,872-0300 [14272 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:55:32,872-0300 [14272 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:55:32,872-0300 [14272 1] com.newrelic INFO: Premain startup complete in 1.698ms
+2024-11-20T13:55:32,873-0300 [14272 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:55:35,692-0300 [14272 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:55:42,890-0300 [14272 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:55:42,890-0300 [14272 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:55:43,710-0300 [14272 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:55:44,362-0300 [14272 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:55:44,362-0300 [14272 57] com.newrelic INFO: Agent run id: BR-MxynF5FF-AF4tVEvx4-lnPhTcAAIBAAAnIQEAADfAAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:55:44,362-0300 [14272 57] com.newrelic INFO: Agent 14272@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:55:44,363-0300 [14272 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:55:44,364-0300 [14272 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:55:44,364-0300 [14272 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:55:44,364-0300 [14272 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:55:44,366-0300 [14272 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:55:44,366-0300 [14272 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:55:44,366-0300 [14272 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:55:45,029-0300 [14272 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:55:45,029-0300 [14272 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:57:35,819-0300 [14272 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:57:35,837-0300 [14272 73] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:57:35,837-0300 [14272 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:57:35,852-0300 [14272 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@55491c95 tried to finish but ServiceManager not started
+2024-11-20T13:57:36,615-0300 [14272 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:57:39,906-0300 [31292 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:57:39,907-0300 [31292 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:57:39,907-0300 [31292 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:57:39,907-0300 [31292 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:57:39,907-0300 [31292 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:57:39,907-0300 [31292 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:57:40,207-0300 [31292 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:57:40,753-0300 [31292 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:57:40,868-0300 [31292 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:57:40,943-0300 [31292 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:57:40,945-0300 [31292 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:57:40,945-0300 [31292 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:57:40,945-0300 [31292 1] com.newrelic INFO: Premain startup complete in 1.582ms
+2024-11-20T13:57:40,946-0300 [31292 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:57:43,638-0300 [31292 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:57:50,955-0300 [31292 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:57:50,956-0300 [31292 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:57:51,791-0300 [31292 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:57:52,441-0300 [31292 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:57:52,441-0300 [31292 57] com.newrelic INFO: Agent run id: BdA57zaS7vcLAF4tVEvx4-lnPhVUAAIBAAAnIQEAAHo8AgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:57:52,441-0300 [31292 57] com.newrelic INFO: Agent 31292@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:57:52,442-0300 [31292 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:57:52,443-0300 [31292 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:57:52,443-0300 [31292 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:57:52,443-0300 [31292 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:57:52,446-0300 [31292 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:57:52,446-0300 [31292 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:57:52,446-0300 [31292 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:57:53,111-0300 [31292 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:57:53,112-0300 [31292 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:58:39,792-0300 [31292 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T13:58:39,811-0300 [31292 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:58:39,811-0300 [31292 73] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T13:58:39,838-0300 [31292 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@a7f07a3 tried to finish but ServiceManager not started
+2024-11-20T13:58:40,589-0300 [31292 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T13:58:43,746-0300 [12900 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T13:58:43,746-0300 [12900 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T13:58:43,746-0300 [12900 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T13:58:43,747-0300 [12900 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T13:58:43,747-0300 [12900 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T13:58:43,747-0300 [12900 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T13:58:44,038-0300 [12900 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T13:58:44,648-0300 [12900 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T13:58:44,772-0300 [12900 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T13:58:44,847-0300 [12900 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T13:58:44,850-0300 [12900 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T13:58:44,850-0300 [12900 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T13:58:44,850-0300 [12900 1] com.newrelic INFO: Premain startup complete in 1.659ms
+2024-11-20T13:58:44,851-0300 [12900 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T13:58:47,618-0300 [12900 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T13:58:54,862-0300 [12900 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T13:58:54,862-0300 [12900 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T13:58:55,704-0300 [12900 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T13:58:56,358-0300 [12900 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T13:58:56,358-0300 [12900 57] com.newrelic INFO: Agent run id: BToT-DeQlVU9AF4tVEvx4-lnPhWQAAIBAAAnIQEAADJkAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T13:58:56,359-0300 [12900 57] com.newrelic INFO: Agent 12900@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T13:58:56,359-0300 [12900 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T13:58:56,360-0300 [12900 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:58:56,360-0300 [12900 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:58:56,360-0300 [12900 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:58:56,362-0300 [12900 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T13:58:56,362-0300 [12900 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T13:58:56,362-0300 [12900 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T13:58:57,014-0300 [12900 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T13:58:57,015-0300 [12900 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:00:22,005-0300 [12900 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T14:00:22,037-0300 [12900 75] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:00:22,037-0300 [12900 76] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:00:22,037-0300 [12900 94] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:00:22,049-0300 [12900 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@1be53700 tried to finish but ServiceManager not started
+2024-11-20T14:00:22,802-0300 [12900 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T14:00:25,555-0300 [8412 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T14:00:25,555-0300 [8412 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T14:00:25,556-0300 [8412 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T14:00:25,556-0300 [8412 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T14:00:25,556-0300 [8412 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T14:00:25,556-0300 [8412 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T14:00:25,837-0300 [8412 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T14:00:26,365-0300 [8412 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T14:00:26,484-0300 [8412 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T14:00:26,568-0300 [8412 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T14:00:26,570-0300 [8412 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T14:00:26,570-0300 [8412 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T14:00:26,570-0300 [8412 1] com.newrelic INFO: Premain startup complete in 1.547ms
+2024-11-20T14:00:26,571-0300 [8412 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T14:00:29,241-0300 [8412 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T14:00:36,591-0300 [8412 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T14:00:36,591-0300 [8412 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:00:37,430-0300 [8412 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T14:00:38,084-0300 [8412 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T14:00:38,084-0300 [8412 57] com.newrelic INFO: Agent run id: Bax5zTzuZHJqAF4tVEvx4-lnPhYIAAIBAAAnIQEAACDcAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T14:00:38,084-0300 [8412 57] com.newrelic INFO: Agent 8412@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T14:00:38,085-0300 [8412 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T14:00:38,086-0300 [8412 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:00:38,086-0300 [8412 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:00:38,086-0300 [8412 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:00:38,088-0300 [8412 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:00:38,088-0300 [8412 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:00:38,088-0300 [8412 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:00:38,748-0300 [8412 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T14:00:38,748-0300 [8412 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:02:38,173-0300 [8412 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T14:02:38,186-0300 [8412 76] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:02:38,186-0300 [8412 75] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:02:38,186-0300 [8412 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:02:38,205-0300 [8412 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@4a2afc22 tried to finish but ServiceManager not started
+2024-11-20T14:02:38,742-0300 [8412 95] com.newrelic WARN: Payload of size 10.820.633 exceeded maximum size 1.000.000 for span_event_data method 
+2024-11-20T14:02:38,742-0300 [8412 95] com.newrelic INFO: Remote span_event_data call failed : com.newrelic.agent.MaxPayloadException: Payload of size 10.820.633 exceeded maximum size 1.000.000 for span_event_data method .
+2024-11-20T14:02:38,977-0300 [8412 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T14:04:07,664-0300 [11656 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T14:04:07,665-0300 [11656 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T14:04:07,665-0300 [11656 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T14:04:07,665-0300 [11656 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T14:04:07,665-0300 [11656 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T14:04:07,665-0300 [11656 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T14:04:07,954-0300 [11656 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T14:04:08,518-0300 [11656 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T14:04:08,639-0300 [11656 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T14:04:08,714-0300 [11656 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T14:04:08,717-0300 [11656 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T14:04:08,717-0300 [11656 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T14:04:08,717-0300 [11656 1] com.newrelic INFO: Premain startup complete in 1.584ms
+2024-11-20T14:04:08,718-0300 [11656 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T14:04:11,403-0300 [11656 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T14:04:18,736-0300 [11656 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T14:04:18,737-0300 [11656 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:04:19,567-0300 [11656 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T14:04:20,222-0300 [11656 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T14:04:20,222-0300 [11656 57] com.newrelic INFO: Agent run id: BWgTXmyJoMhDAF4tVEvx4-lnPhb4AAIBAAAnIQEAAC2IAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T14:04:20,222-0300 [11656 57] com.newrelic INFO: Agent 11656@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T14:04:20,223-0300 [11656 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T14:04:20,224-0300 [11656 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:04:20,224-0300 [11656 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:04:20,224-0300 [11656 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:04:20,226-0300 [11656 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:04:20,226-0300 [11656 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:04:20,226-0300 [11656 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:04:20,885-0300 [11656 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T14:04:20,886-0300 [11656 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:05:03,196-0300 [11656 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T14:05:03,232-0300 [11656 75] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:05:03,232-0300 [11656 76] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:05:03,232-0300 [11656 74] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T14:05:03,247-0300 [11656 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@6e97c25a tried to finish but ServiceManager not started
+2024-11-20T14:05:03,997-0300 [11656 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\logs\newrelic_agent.log
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: JRE vendor Oracle Corporation version 21.0.4
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 21.0.4+8-LTS-274
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: Agent Host: DESKTOP-LIHK26P IP: 192.168.56.1
+2024-11-20T14:05:06,694-0300 [30160 1] com.newrelic INFO: New Relic Agent v8.15.0 is initializing...
+2024-11-20T14:05:06,981-0300 [30160 36] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2024-11-20T14:05:07,504-0300 [30160 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2024-11-20T14:05:07,629-0300 [30160 1] com.newrelic INFO: Setting audit_mode to false
+2024-11-20T14:05:07,706-0300 [30160 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\Tobias\IdeaProjects\snippet-manager\newrelic\.\newrelic.yml
+2024-11-20T14:05:07,709-0300 [30160 1] com.newrelic INFO: New Relic Agent v8.15.0 has started
+2024-11-20T14:05:07,709-0300 [30160 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@7cdbc5d3
+2024-11-20T14:05:07,709-0300 [30160 1] com.newrelic INFO: Premain startup complete in 1.549ms
+2024-11-20T14:05:07,710-0300 [30160 1] com.newrelic INFO: New Relic Security is completely disabled by one of the user provided config `security.enabled`, `security.agent.enabled` or `high_security`. Not loading security capabilities.
+2024-11-20T14:05:10,372-0300 [30160 1] com.newrelic INFO: Server Info: Apache Tomcat/10.1.30
+2024-11-20T14:05:17,712-0300 [30160 57] com.newrelic INFO: Host name is DESKTOP-LIHK26P, display host DESKTOP-LIHK26P for application printscript-10
+2024-11-20T14:05:17,713-0300 [30160 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T14:05:18,387-0300 [30160 57] com.newrelic INFO: Collector redirection to collector.newrelic.com:443
+2024-11-20T14:05:18,872-0300 [30160 57] com.newrelic INFO: Max payload size is 1.000.000 bytes
+2024-11-20T14:05:18,872-0300 [30160 57] com.newrelic INFO: Agent run id: BS1YIT6V3ep2AF4tVEvx4-lnPhc0AAIBAAAnIQEAAHXQAgRL8ex5AwAGOC4xNS4wAA9ERVNLVE9QLUxJSEsyNlAADnByaW50c2NyaXB0LTEw
+2024-11-20T14:05:18,873-0300 [30160 57] com.newrelic INFO: Agent 30160@DESKTOP-LIHK26P/printscript-10 connected to collector.newrelic.com:443
+2024-11-20T14:05:18,873-0300 [30160 57] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/6171988/applications/1274145913
+2024-11-20T14:05:18,874-0300 [30160 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:05:18,874-0300 [30160 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:05:18,874-0300 [30160 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:05:18,876-0300 [30160 57] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2024-11-20T14:05:18,876-0300 [30160 57] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2024-11-20T14:05:18,876-0300 [30160 57] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2024-11-20T14:05:19,374-0300 [30160 57] com.newrelic INFO: Real user monitoring is enabled for application printscript-10. Auto instrumentation is enabled.
+2024-11-20T14:05:19,375-0300 [30160 57] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2024-11-20T15:28:30,644-0300 [30160 31] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2024-11-20T15:28:30,729-0300 [30160 104] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T15:28:30,729-0300 [30160 73] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T15:28:30,730-0300 [30160 72] com.newrelic WARN: DatastoreParameters was null for Lettuce instrumentation. Unable to report as external
+2024-11-20T15:28:30,765-0300 [30160 62] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@6560bad8 tried to finish but ServiceManager not started
+2024-11-20T15:28:31,433-0300 [30160 31] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
