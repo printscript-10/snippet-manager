@@ -29,6 +29,7 @@ import org.prinstcript10.snippetmanager.snippet.repository.SnippetRepository
 import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetFormattingRepository
 import org.prinstcript10.snippetmanager.snippet.repository.UserSnippetLintingRepository
 import org.prinstcript10.snippetmanager.testCase.service.TestCaseService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -46,6 +47,7 @@ class SnippetService
         private val testCaseService: TestCaseService,
 
     ) {
+        private val logger = LoggerFactory.getLogger(SnippetService::class.java)
 
         suspend fun createSnippet(
             createSnippetDTO: CreateSnippetDTO,
@@ -53,6 +55,9 @@ class SnippetService
             token: String,
         ): SnippetDTO {
             // VALIDATE SNIPPET
+            logger.info(
+                "Started creating snippet with name: ${createSnippetDTO.name}, language: ${createSnippetDTO.language}",
+            )
             runnerServices[createSnippetDTO.language]!!.validateSnippet(
                 createSnippetDTO.snippet,
                 token,
@@ -70,6 +75,7 @@ class SnippetService
             val assetResponse = assetService.saveSnippet(snippet.id!!, createSnippetDTO.snippet)
 
             if (assetResponse.statusCode.isError) {
+                logger.error("Error creating snippet:" + assetResponse.body)
                 snippetRepository.delete(snippet)
                 throw ConflictException("Error saving snippet to asset service")
             }
@@ -78,6 +84,7 @@ class SnippetService
             val permission = permissionService.createPermission(snippet.id, token)
 
             if (permission.statusCode.isError) {
+                logger.error("Error creating snippet:" + permission.body)
                 snippetRepository.delete(snippet)
                 throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
             }
