@@ -6,6 +6,7 @@ import org.austral.ingsis.redis.RedisStreamConsumer
 import org.prinstcript10.snippetmanager.redis.testCase.event.TestCaseResponseEvent
 import org.prinstcript10.snippetmanager.testCase.model.enum.TestStatus
 import org.prinstcript10.snippetmanager.testCase.service.TestCaseService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -26,6 +27,8 @@ class TestCaseResponseConsumer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamConsumer<String>(streamName, groupName, redis) {
 
+        private val logger = LoggerFactory.getLogger(TestCaseResponseConsumer::class.java)
+
         override fun onMessage(record: ObjectRecord<String, String>) {
             val testResponse: TestCaseResponseEvent = objectMapper.readValue(record.value)
             val testCase = testCaseService.getTestCaseById(testResponse.testCaseId)
@@ -38,7 +41,7 @@ class TestCaseResponseConsumer
                 TestStatus.FAIL
             }
 
-            println("Received test case response: $testResponse")
+            logger.info("Received test case response: $testResponse")
             testCaseService.updateSnippetTestCaseStatus(
                 testResponse.testCaseId,
                 status,

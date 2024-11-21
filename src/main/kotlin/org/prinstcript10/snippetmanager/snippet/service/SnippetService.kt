@@ -56,8 +56,9 @@ class SnippetService
         ): SnippetDTO {
             // VALIDATE SNIPPET
             logger.info(
-                "Started creating snippet with name: ${createSnippetDTO.name}, language: ${createSnippetDTO.language}",
+                "Creating snippet with name: ${createSnippetDTO.name}, language: ${createSnippetDTO.language}",
             )
+            logger.info("Validating snippet ${createSnippetDTO.name}")
             runnerServices[createSnippetDTO.language]!!.validateSnippet(
                 createSnippetDTO.snippet,
                 token,
@@ -72,19 +73,21 @@ class SnippetService
             )
 
             // SAVE SNIPPET TO ASSET SERVICE
+            logger.info("Saving snippet: ${createSnippetDTO.name} to asset service")
             val assetResponse = assetService.saveSnippet(snippet.id!!, createSnippetDTO.snippet)
 
             if (assetResponse.statusCode.isError) {
-                logger.error("Error creating snippet:" + assetResponse.body)
+                logger.error("Error saving snippet to assetService:" + assetResponse.body)
                 snippetRepository.delete(snippet)
                 throw ConflictException("Error saving snippet to asset service")
             }
 
             // CREATE PERMISSION
+            logger.info("Creating snippet permission for snippet: ${createSnippetDTO.name}")
             val permission = permissionService.createPermission(snippet.id, token)
 
             if (permission.statusCode.isError) {
-                logger.error("Error creating snippet:" + permission.body)
+                logger.error("Error creating snippet permission:" + permission.body)
                 snippetRepository.delete(snippet)
                 throw ConflictException(extractMessage(permission.body!!.toString(), "message"))
             }
@@ -102,6 +105,7 @@ class SnippetService
         }
 
         fun getSnippet(snippetId: String, token: String): SnippetDTO {
+            logger.info("Getting snippet: $snippetId")
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -119,6 +123,7 @@ class SnippetService
         }
 
         fun getSnippetLanguages(): List<GetSnippetLanguageDTO> {
+            logger.info("Getting languages")
             return SnippetLanguage.entries.map {
                 GetSnippetLanguageDTO(
                     language = it.name,
@@ -134,6 +139,7 @@ class SnippetService
             param: String,
             userId: String,
         ): PaginatedSnippetsDTO {
+            logger.info("Getting all snippets for user: $userId")
             val offset = page * pageSize
             val response = permissionService.getAllSnippetPermissions(token)
 
@@ -180,6 +186,7 @@ class SnippetService
 
         @Transactional
         suspend fun updateSnippet(editSnippetDTO: EditSnippetDTO, snippetId: String, token: String) {
+            logger.info("Updating snippet: $snippetId")
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -194,7 +201,7 @@ class SnippetService
 //                    "User is not the snippet owner",
 //                )
 //            }
-
+            logger.info("Validating snippet: $snippetId")
             runnerServices[existingSnippet.language]!!.validateSnippet(
                 editSnippetDTO.snippet,
                 token,
@@ -202,11 +209,12 @@ class SnippetService
 
             val tests: List<String> = testCaseService.resetSnippetTesting(snippetId)
             testCaseService.publishSnippetTestingEvents(tests)
-
+            logger.info("Saving updated snippet: $snippetId")
             assetService.saveSnippet(snippetId, editSnippetDTO.snippet)
         }
 
         fun deleteSnippet(snippetId: String, token: String) {
+            logger.info("Deleting snippet: $snippetId")
             val existingSnippet = snippetRepository.findById(snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -218,16 +226,17 @@ class SnippetService
         }
 
         suspend fun shareSnippet(shareSnippetDTO: ShareSnippetDTO, token: String) {
+            logger.info("Sharing snippet: ${shareSnippetDTO.snippetId} to user: ${shareSnippetDTO.userId}")
             val snippet = snippetRepository.findById(shareSnippetDTO.snippetId)
                 .orElseThrow { NotFoundException("Snippet with ID ${shareSnippetDTO.snippetId} not found") }
 
             permissionService.shareSnippet(shareSnippetDTO, token)
-
             createUserPendingSnippetLint(shareSnippetDTO.userId, snippet)
             createUserPendingSnippetFormat(shareSnippetDTO.userId, snippet)
         }
 
         fun getSnippetFriends(page: Int, pageSize: Int, param: String, userId: String): PaginatedUsersDTO {
+            logger.info("Getting snippet friends for user: $userId")
             val users = auth0Service.getUsers(page, pageSize, param).body!!.filter { it.user_id != userId }
             return PaginatedUsersDTO(
                 users = users,
@@ -236,6 +245,7 @@ class SnippetService
         }
 
         fun resetUserSnippetLinting(userId: String): List<String> {
+            logger.info("Resetting snippet linting for user: $userId")
             val snippets = userSnippetLintingRepository.findAllByUserId(userId)
             snippets.forEach {
                 it.status = SnippetLintingStatus.PENDING
@@ -247,6 +257,7 @@ class SnippetService
         }
 
         fun resetUserSnippetFormatting(userId: String): List<String> {
+            logger.info("Resetting snippet formatting for user: $userId")
             val snippets = userSnippetFormattingRepository.findAllByUserId(userId)
             snippets.forEach {
                 it.status = SnippetFormatStatus.PENDING
@@ -258,6 +269,7 @@ class SnippetService
 
         @Transactional
         fun updateUserSnippetLintingStatus(snippetId: String, userId: String, status: SnippetLintingStatus) {
+            logger.info("Updating snippet linting status for user: $userId")
             userSnippetLintingRepository.findFirstBySnippetIdAndUserId(snippetId, userId)?.let {
                 it.status = status
                 userSnippetLintingRepository.save(it)
@@ -266,6 +278,7 @@ class SnippetService
 
         @Transactional
         fun updateUserSnippetFormatStatus(snippetId: String, userId: String, status: SnippetFormatStatus) {
+            logger.info("Updating snippet formatting status for user: $userId")
             userSnippetFormattingRepository.findFirstBySnippetIdAndUserId(snippetId, userId)?.let {
                 it.status = status
                 userSnippetFormattingRepository.save(it)

@@ -17,6 +17,7 @@ import org.prinstcript10.snippetmanager.rules.model.enum.RuleType
 import org.prinstcript10.snippetmanager.rules.repository.RuleRepository
 import org.prinstcript10.snippetmanager.rules.repository.UserRuleRepository
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -34,12 +35,16 @@ class RulesService
         private val formatRequestProducer: FormatRequestProducer,
     ) {
 
+        private val logger = LoggerFactory.getLogger(RulesService::class.java)
+
         fun getRules(ruleType: RuleType, userId: String): List<GetRuleDTO> {
+            logger.info("Getting rules for $ruleType and user $userId")
             return ruleRepository.findAllRulesWithUserValuesByUserAndType(userId, ruleType)
         }
 
         @Transactional
         suspend fun updateUserRules(rules: List<AddUserRuleDTO>, ruleType: RuleType, userId: String) {
+            logger.info("Updating user rules for user: $userId")
             rules.forEach { rule ->
                 val userRule = userRuleRepository.findFirstByUserIdAndRuleId(userId, rule.ruleId)
                 if (userRule != null) {
@@ -57,7 +62,6 @@ class RulesService
                     )
                 }
             }
-
             // REQUEST CAMBIAR LINT/FORMAT
             if (ruleType == RuleType.LINT) {
                 val snippetIds: List<String> = snippetService.resetUserSnippetLinting(userId)
@@ -69,8 +73,9 @@ class RulesService
         }
 
         fun formatSnippet(snippet: String, token: String, userId: String): ResponseEntity<FormatSnippetResponseDTO> {
+            logger.info("Parsing format rules for user: $userId")
             val config = parseFormatRules(userId)
-
+            logger.info("Formatting snippet: $snippet")
             return runnerService.formatSnippet(snippet, config, token)
         }
 
@@ -104,6 +109,7 @@ class RulesService
         }
 
         fun parseLintRules(userId: String): LintConfig {
+            logger.info("Parsing linting rules for user: $userId")
             val rules: List<UserRule> = userRuleRepository.findAllByUserIdAndRuleType(userId, RuleType.LINT)
             val config = LintConfig(null, null, null)
 
