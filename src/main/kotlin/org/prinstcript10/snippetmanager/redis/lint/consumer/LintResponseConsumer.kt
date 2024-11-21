@@ -38,7 +38,7 @@ class LintResponseConsumer
 
         override fun options(): StreamReceiver.StreamReceiverOptions<String, ObjectRecord<String, String>> {
             return StreamReceiver.StreamReceiverOptions.builder()
-                .pollTimeout(java.time.Duration.ofMillis(10000))
+                .pollTimeout(java.time.Duration.ofMillis(50000))
                 .targetType(String::class.java)
                 .build()
         }
