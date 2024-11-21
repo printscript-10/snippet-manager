@@ -21,6 +21,7 @@ import org.prinstcript10.snippetmanager.testCase.model.dto.TestCaseDTO
 import org.prinstcript10.snippetmanager.testCase.model.entity.SnippetTesting
 import org.prinstcript10.snippetmanager.testCase.model.entity.TestCase
 import org.prinstcript10.snippetmanager.testCase.model.enum.TestStatus
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -37,7 +38,10 @@ class TestCaseService(
 
 ) {
 
+    private val logger = LoggerFactory.getLogger(TestCaseService::class.java)
+
     fun addTestCase(createTestCaseDTO: CreateTestCaseDTO, snippetId: String, token: String) {
+        logger.info("Creating test case: $createTestCaseDTO for snippet: $snippetId")
         permissionService.getPermission(snippetId, token)
 
 //        val ownership = (permission.body as SnippetPermissionDTO).ownership
@@ -64,6 +68,7 @@ class TestCaseService(
     }
 
     fun runTestCaseById(testId: String, token: String): RunTestCaseResponseDTO {
+        logger.info("Running test case with id: $testId")
         val test = testCaseRepository.findById(testId).orElseThrow {
             BadRequestException("No TestCase with that Id found")
         }
@@ -92,6 +97,7 @@ class TestCaseService(
     }
 
     fun runTestCase(testCaseDTO: RunTestCaseDTO, token: String): RunTestCaseResponseDTO {
+        logger.info("Running test for snippet: ${testCaseDTO.snippetId}")
         val snippet = snippetRepository.findById(testCaseDTO.snippetId)
             .orElseThrow { throw NotFoundException("Snippet not found with id: ${testCaseDTO.snippetId}") }
 
@@ -117,6 +123,7 @@ class TestCaseService(
 
     @Transactional
     fun getTestCaseById(id: String): TestCase {
+        logger.info("Getting test case by id: $id")
         val testCase = testCaseRepository.findById(id)
             .orElseThrow { NotFoundException("TestCase with ID $id not found") }
 
@@ -125,6 +132,7 @@ class TestCaseService(
     }
 
     fun getSnippetTests(snippetId: String, token: String): List<TestCaseDTO> {
+        logger.info("Getting snippet tests for snippet: $snippetId")
         snippetRepository.findById(snippetId)
             .orElseThrow { NotFoundException("Snippet with ID $snippetId not found") }
 
@@ -147,13 +155,14 @@ class TestCaseService(
 
         val snippetId = existingTest.snippet?.id
             ?: throw ConflictException("Error finding the snippet for that test")
-
+        logger.info("Getting permission for snippet: $snippetId")
         permissionService.getPermission(snippetId, token)
-
+        logger.info("Deleting test case: $testId")
         testCaseRepository.deleteById(testId)
     }
 
     fun resetSnippetTesting(snippetId: String): List<String> {
+        logger.info("Resetting snippet testing status for snippet: $snippetId")
         val tests = snippetTestingRepository.findAllBySnippetId(snippetId)
         tests.forEach {
             it.status = TestStatus.PENDING

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.austral.ingsis.redis.RedisStreamConsumer
 import org.prinstcript10.snippetmanager.redis.lint.event.LintResponseEvent
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -25,10 +26,12 @@ class LintResponseConsumer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamConsumer<String>(streamName, groupName, redis) {
 
+        private val logger = LoggerFactory.getLogger(LintResponseConsumer::class.java)
+
         override fun onMessage(record: ObjectRecord<String, String>) {
             val lintResponse: LintResponseEvent = objectMapper.readValue(record.value)
 
-            println("Received lint response: $lintResponse")
+            logger.info("Received lint response: $lintResponse")
             snippetService.updateUserSnippetLintingStatus(
                 lintResponse.snippetId,
                 lintResponse.userId,

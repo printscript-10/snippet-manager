@@ -7,6 +7,7 @@ import org.prinstcript10.snippetmanager.integration.asset.AssetService
 import org.prinstcript10.snippetmanager.redis.format.event.FormatResponseEvent
 import org.prinstcript10.snippetmanager.snippet.model.enum.SnippetFormatStatus
 import org.prinstcript10.snippetmanager.snippet.service.SnippetService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -28,10 +29,12 @@ class FormatResponseConsumer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamConsumer<String>(streamName, groupName, redis) {
 
+        private val logger = LoggerFactory.getLogger(FormatResponseConsumer::class.java)
+
         override fun onMessage(record: ObjectRecord<String, String>) {
             val formatResponse: FormatResponseEvent = objectMapper.readValue(record.value)
 
-            println("Received format response: $formatResponse")
+            logger.info("Received format response: $formatResponse")
             snippetService.updateUserSnippetFormatStatus(
                 formatResponse.snippetId,
                 formatResponse.userId,

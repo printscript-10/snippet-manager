@@ -1,6 +1,7 @@
 package org.prinstcript10.snippetmanager.redis.testCase.producer
 
 import org.austral.ingsis.redis.RedisStreamProducer
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
@@ -15,8 +16,10 @@ class TestCaseRequestProducer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamProducer(streamName, redis) {
 
+        private val logger = LoggerFactory.getLogger(TestCaseRequestProducer::class.java)
+
         suspend fun publishEvent(event: String) {
-            println("Publishing test case request: $event")
+            logger.info("Publishing test case request: $event")
             emit(event)
         }
     }

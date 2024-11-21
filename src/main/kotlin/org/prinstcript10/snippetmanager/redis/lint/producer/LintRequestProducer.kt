@@ -1,6 +1,7 @@
 package org.prinstcript10.snippetmanager.redis.lint.producer
 
 import org.austral.ingsis.redis.RedisStreamProducer
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
@@ -15,8 +16,10 @@ class LintRequestProducer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamProducer(streamName, redis) {
 
+        private val logger = LoggerFactory.getLogger(LintRequestProducer::class.java)
+
         suspend fun publishEvent(event: String) {
-            println("Publishing lint request: $event")
+            logger.info("Publishing lint request: $event")
             emit(event)
         }
     }
