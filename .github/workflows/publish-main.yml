@@ -45,7 +45,7 @@ jobs:
           USERNAME: ${{ secrets.GHCR_USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
         with:
-          host: ${{ secrets.DEV_EC2_HOST_DNS }}
+          host: ${{ secrets.PROD_EC2_HOST_DNS }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: USERNAME, TOKEN
